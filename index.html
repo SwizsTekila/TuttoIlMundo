@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutto il Mundo — Rutas de viaje para exploradores independientes</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.svg">
 <meta name="description" content="No somos tu típica agencia de tours. Diseñamos rutas optimizadas para viajeros independientes que quieren explorar el mundo a su manera.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -360,33 +362,41 @@ nav.scrolled { border-bottom-color: var(--line); }
 }
 .btn-ghost:hover { color: var(--teal-dark); border-bottom-color: var(--teal-dark); }
 
-/* Hero visual — orbit */
+/* Hero visual — animated logo */
 .hero-visual {
   position: relative;
   aspect-ratio: 1;
   max-width: 500px;
   margin-left: auto;
+  animation: hero-logo-reveal 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
-.orbit-svg {
+.hero-logo-float {
   width: 100%;
   height: 100%;
-  overflow: visible;
+  animation: hero-logo-bob 6.5s ease-in-out infinite;
 }
-.orbit-svg .globe-line { stroke: var(--teal-dark); fill: none; stroke-width: 1.2; }
-.orbit-svg .orbit-dash { stroke: var(--teal); fill: none; stroke-width: 1.2; stroke-dasharray: 4 6; opacity: 0.8; }
-.orbit-svg .orbit-outer { stroke: var(--periwinkle); fill: none; stroke-width: 1; opacity: 0.7; }
-.orbit-svg .plane { fill: var(--teal-dark); }
-.orbit-svg .node { fill: var(--teal-dark); }
-.orbit-svg .label { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.hero-logo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: hero-logo-breathe 8s ease-in-out infinite;
+}
 
-@keyframes rotate-slow { to { transform: rotate(360deg); } }
-@keyframes rotate-reverse { to { transform: rotate(-360deg); } }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-.orbit-rotate-1 { transform-origin: center; animation: rotate-slow 80s linear infinite; }
-.orbit-rotate-2 { transform-origin: center; animation: rotate-reverse 60s linear infinite; }
-.plane-float { animation: float 3s ease-in-out infinite; transform-origin: center; }
+@keyframes hero-logo-reveal {
+  from { opacity: 0; transform: scale(0.85) translateY(24px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes hero-logo-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes hero-logo-breathe {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(17,189,184,0)); }
+  50%      { transform: scale(1.025); filter: drop-shadow(0 0 28px rgba(17,189,184,0.35)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual, .hero-logo-float, .hero-logo-img { animation: none; }
+}
 
 /* Hero stats */
 .hero-stats {
@@ -1329,9 +1339,28 @@ footer {
 }
 
 /* ====== RESPONSIVE ====== */
+
+/* Mobile nav toggle (hamburger) — additive, shows the existing .nav-links as a dropdown on small screens */
+.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:.4rem;flex-direction:column;gap:5px;z-index:201;}
+.nav-burger span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s ease,opacity .25s ease;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
 @media (max-width: 1024px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
+  .nav-burger{display:flex;}
+  .nav-links.mobile-open{
+    display:flex; flex-direction:column; align-items:flex-start; gap:0;
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--paper); border-top:1px solid var(--line);
+    box-shadow:0 20px 40px -15px rgba(10,20,16,.15);
+    padding:.5rem 1.5rem 1rem;
+  }
+  .nav-links.mobile-open li{width:100%;}
+  .nav-links.mobile-open a{display:block;width:100%;padding:.85rem 0;border-bottom:1px solid var(--line);}
+  .nav-links.mobile-open a::after{display:none;}
   .hero { padding: 7rem 1.5rem 4rem; }
   .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
   .hero-visual { max-width: 400px; margin: 0 auto; }
@@ -3990,7 +4019,7 @@ body::after {
 }
 .nav-reserva-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 .nav-reserva-arrow { font-size: 0.85rem; }
-@media(max-width:1024px) { .nav-reserva-btn { display: none; } }
+@media(max-width:1024px) { .nav-reserva-btn { display: none; } .cta-nav { display: none; } }
 
 
 /* ── Stripe CTA — prominent, gradient, conversion-optimized ── */
@@ -4669,6 +4698,9 @@ body::after {
     <a href="#contacto" class="cta-nav" data-es="Diseña tu ruta" data-en="Design your route">
       Diseña tu ruta <span class="arrow">→</span>
     </a>
+    <button class="nav-burger" id="navBurger" aria-label="Abrir menú" aria-haspopup="true" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -4695,47 +4727,11 @@ body::after {
       </div>
     </div>
 
-    <!-- Hero Visual: orbit with plane -->
+    <!-- Hero Visual: animated logo -->
     <div class="hero-visual">
-      <svg class="orbit-svg" viewBox="0 0 400 400">
-        <!-- Outer orbit -->
-        <g class="orbit-rotate-1">
-          <circle cx="200" cy="200" r="180" class="orbit-outer"/>
-          <circle cx="380" cy="200" r="3" class="node"/>
-        </g>
-        <!-- Middle dashed orbit -->
-        <g class="orbit-rotate-2">
-          <ellipse cx="200" cy="200" rx="140" ry="140" class="orbit-dash"/>
-          <circle cx="60" cy="200" r="2.5" fill="#8B9BFF"/>
-        </g>
-        <!-- Inner globe -->
-        <g class="globe">
-          <circle cx="200" cy="200" r="90" class="globe-line"/>
-          <path d="M 110 200 Q 155 180 200 200 Q 245 220 290 200" class="globe-line" opacity="0.6"/>
-          <path d="M 115 230 Q 160 212 200 230 Q 245 248 285 230" class="globe-line" opacity="0.5"/>
-          <path d="M 115 170 Q 160 152 200 170 Q 245 188 285 170" class="globe-line" opacity="0.5"/>
-          <path d="M 200 110 Q 218 155 200 200 Q 182 245 200 290" class="globe-line" opacity="0.6"/>
-          <ellipse cx="200" cy="200" rx="90" ry="32" class="globe-line" opacity="0.3" stroke-dasharray="2 3"/>
-          <!-- Continents abstract -->
-          <path d="M 160 170 Q 170 175 175 185 Q 172 195 165 192 Q 155 188 158 178 Z" class="globe-line" fill="none" stroke-width="1"/>
-          <path d="M 215 175 Q 235 172 240 185 Q 238 200 225 205 Q 215 198 215 185 Z" class="globe-line" fill="none" stroke-width="1"/>
-          <path d="M 180 220 Q 195 215 210 225 Q 205 240 190 238 Q 178 232 180 225 Z" class="globe-line" fill="none" stroke-width="1"/>
-          <path d="M 230 215 Q 245 212 250 225 Q 245 232 237 228 Z" class="globe-line" fill="none" stroke-width="1"/>
-        </g>
-        <!-- Plane arc -->
-        <path d="M 50 120 Q 200 40 350 120" stroke="#0E8B78" fill="none" stroke-width="1" stroke-dasharray="4 6" opacity="0.6"/>
-        <!-- Plane -->
-        <g class="plane-float" transform="translate(290 95)">
-          <path d="M 0 0 L 18 -5 Q 24 -7 26 -2 L 22 4 L 14 2 L 10 10 L 14 12 L 12 14 L 4 10 L 0 12 L -2 10 L 2 5 Z" class="plane" transform="rotate(20)"/>
-        </g>
-        <!-- Corner label -->
-        <g transform="translate(30 380)">
-          <text class="label">lat 40°N lon 3°W</text>
-        </g>
-        <g transform="translate(280 30)">
-          <text class="label">via aerea</text>
-        </g>
-      </svg>
+      <div class="hero-logo-float">
+        <img src="logo-hero.png" alt="Tutto il Mundo" class="hero-logo-img" width="1000" height="1000" loading="eager">
+      </div>
     </div>
   </div>
 
@@ -6746,7 +6742,7 @@ body::after {
         <span class="num" style="color:var(--teal)">00</span>
         <span data-es="Por qué nosotros" data-en="Why us">Por qué nosotros</span>
       </div>
-      <h2 data-es-html='El mundo no se sigue.<br>Se <span class="italic">explora.</span>' data-en-html='The world isn&#39;t meant to be followed.<br>It&#39;s meant to be <span class="italic">explored.</span>'>
+      <h2 data-es-html='El mundo no se sigue.<br>Se <span class="italic">explora.</span>' data-en-html='The world isn&#39;t followed.<br>It&#39;s <span class="italic">explored.</span>'>
         El mundo no se sigue.<br>Se <span class="italic">explora.</span>
       </h2>
       <p class="why-hero-sub" data-es="No somos una agencia de viajes tradicional. Somos viajeros que diseñan rutas para otros viajeros. Sin itinerarios rígidos, sin buses masivos, sin guías presionando. Solo tú, tu ruta y el mundo." data-en="We're not a traditional travel agency. We're travelers who design routes for other travelers. No rigid itineraries, no mass buses, no rushing guides. Just you, your route and the world.">
@@ -6827,7 +6823,7 @@ body::after {
     </div>
 
     <div class="why-close-statement">
-      <p data-es='"No vendemos paquetes. Diseñamos libertad."' data-en='"We don't sell packages. We design freedom."'>
+      <p data-es='"No vendemos paquetes. Diseñamos libertad."' data-en='"We don&#39;t sell packages. We craft freedom."'>
         "No vendemos paquetes. Diseñamos libertad."
       </p>
     </div>
@@ -7203,7 +7199,7 @@ body::after {
         <h3 style="font-family:Fraunces,serif;font-size:1.2rem;font-weight:400;color:#fff;margin:0 0 .75rem;">Hasta 12 meses <em style="font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-es="sin intereses" data-en="interest-free">sin intereses</em></h3>
         <p style="color:rgba(255,255,255,.6);font-family:Poppins,sans-serif;font-size:.85rem;line-height:1.65;margin:0 0 1rem;">Europa $56K a 12 MSI = <strong style="color:#fff;">$4,667/mes</strong>. Divide tu ruta en mensualidades cómodas.</p>
         <a href="#contacto" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--grad-h);color:#0A1410;padding:.6rem 1.2rem;border-radius:999px;font-family:Poppins,sans-serif;font-size:.8rem;font-weight:600;text-decoration:none;" data-es="Consultar MSI" data-en="Check installments">Consultar MSI</a>
-        <p style="margin:.85rem 0 0;font-family:Poppins,sans-serif;font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em;" data-es="¡MSI y TDC aceptados!" data-en="¡Installments & credit cards accepted!">¡MSI y TDC aceptados!</p><p style="margin:.3rem 0 0;font-family:Poppins,sans-serif;font-size:.75rem;font-weight:400;color:rgba(255,255,255,.6);" data-es="Para todas nuestras rutas." data-en="For all our routes.">Para todas nuestras rutas.</p>
+        <p style="margin:.85rem 0 0;font-family:Poppins,sans-serif;font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em;" data-es="¡MSI y TDC aceptados!" data-en="Installments & credit cards accepted!">¡MSI y TDC aceptados!</p><p style="margin:.3rem 0 0;font-family:Poppins,sans-serif;font-size:.75rem;font-weight:400;color:rgba(255,255,255,.6);" data-es="Para todas nuestras rutas." data-en="For all our routes.">Para todas nuestras rutas.</p>
       </div>
 
       <!-- FICHA ABIERTA with floating elements + Stripe CTA -->
@@ -7402,6 +7398,105 @@ body::after {
   <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- ============ MUSIC PLAYER ============ -->
+<style>
+.music-float{position:fixed;bottom:2rem;left:2rem;z-index:9998;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;}
+.music-btn{display:flex;align-items:center;gap:.55rem;background:rgba(14,30,24,.32);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:.5rem .95rem .5rem .6rem;cursor:pointer;color:var(--ink);font-family:Poppins,sans-serif;font-size:.75rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);transition:border-color .25s,box-shadow .25s,background .25s;box-shadow:0 4px 18px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14);}
+.music-btn:hover{border-color:rgba(17,189,184,.5);background:rgba(14,30,24,.44);box-shadow:0 4px 24px rgba(17,189,184,.2),inset 0 1px 0 rgba(255,255,255,.2);}
+.music-disc{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#11BDB8,#0E8B78);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s;}
+.music-disc .icon-pause{display:none;}
+.music-btn.mp-playing .music-disc .icon-play{display:none;}
+.music-btn.mp-playing .music-disc .icon-pause{display:block;}
+@keyframes mpSpin{to{transform:rotate(360deg);}}
+.music-title{display:block;color:rgba(251,250,246,.82);font-weight:500;font-size:.75rem;line-height:1.2;}
+.music-sub{display:block;color:rgba(251,250,246,.38);font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.06em;}
+.music-prog-wrap{height:2px;background:rgba(17,189,184,.12);border-radius:99px;overflow:hidden;width:130px;opacity:0;transition:opacity .35s;}
+.music-prog-wrap.mp-vis{opacity:1;}
+.music-prog-fill{height:100%;background:linear-gradient(90deg,#11BDB8,#0E8B78);border-radius:99px;width:0%;transition:width .8s linear;}
+</style>
+
+<div class="music-float">
+  <button class="music-btn" id="mpBtn" onclick="mpToggle()" aria-label="Reproducir soundtrack oficial">
+    <span class="music-disc">
+      <svg class="icon-play" width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="icon-pause" width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </span>
+    <span>
+      <span class="music-title">Tutto il Mundo</span>
+      <span class="music-sub" id="mpState">Soundtrack oficial</span>
+    </span>
+  </button>
+  <div class="music-prog-wrap" id="mpProg"><div class="music-prog-fill" id="mpFill"></div></div>
+</div>
+<audio id="mpAudio" src="theme.mp3" preload="none" loop></audio>
+
+<!-- ============ AI CHAT ============ -->
+<style>
+.chat-fab{position:fixed;bottom:6.25rem;right:2rem;z-index:9997;}
+.chat-fab-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#11BDB8,#0E8B78);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(17,189,184,.38);transition:transform .2s,box-shadow .2s;position:relative;}
+.chat-fab-btn:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(17,189,184,.48);}
+.chat-pulse-dot{position:absolute;top:0;right:0;width:13px;height:13px;background:#11BDB8;border-radius:50%;border:2.5px solid #0A1410;animation:cpulse 2.2s ease-in-out infinite;}
+@keyframes cpulse{0%,100%{transform:scale(1);opacity:1;}55%{transform:scale(1.5);opacity:.5;}}
+.chat-panel{position:fixed;bottom:10rem;right:2rem;width:360px;max-height:530px;background:#0E1E16;border:1px solid rgba(17,189,184,.16);border-radius:20px;box-shadow:0 24px 64px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;z-index:9997;transform:scale(.92) translateY(16px);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .3s;}
+.chat-panel.cp-open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+.chat-hdr{padding:.9rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;background:rgba(17,189,184,.04);}
+.chat-hdr-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#11BDB8,#0E8B78);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.chat-hdr-info{margin-left:.6rem;flex:1;}
+.chat-hdr-name{font-family:Poppins,sans-serif;font-size:.84rem;font-weight:600;color:rgba(251,250,246,.9);}
+.chat-hdr-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.09em;color:#11BDB8;text-transform:uppercase;margin-top:.1rem;}
+.chat-hdr-close{background:none;border:none;cursor:pointer;color:rgba(251,250,246,.35);padding:.3rem;border-radius:6px;transition:color .18s;}
+.chat-hdr-close:hover{color:rgba(251,250,246,.65);}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.7rem;min-height:260px;scrollbar-width:thin;scrollbar-color:rgba(17,189,184,.15) transparent;}
+.cmsg{max-width:86%;padding:.65rem .95rem;border-radius:13px;font-family:Poppins,sans-serif;font-size:.81rem;line-height:1.55;white-space:pre-line;}
+.cmsg.bot{background:rgba(17,189,184,.09);border:1px solid rgba(17,189,184,.14);color:rgba(251,250,246,.82);align-self:flex-start;border-bottom-left-radius:3px;}
+.cmsg.usr{background:rgba(17,189,184,.17);color:rgba(251,250,246,.9);align-self:flex-end;border-bottom-right-radius:3px;}
+.cmsg.typing{background:rgba(17,189,184,.07);border:1px solid rgba(17,189,184,.1);align-self:flex-start;padding:.65rem 1rem;}
+.cdots{display:flex;gap:.3rem;align-items:center;height:18px;}
+.cdots span{width:6px;height:6px;background:#11BDB8;border-radius:50%;animation:cdot 1.2s ease-in-out infinite;}
+.cdots span:nth-child(2){animation-delay:.2s;}.cdots span:nth-child(3){animation-delay:.4s;}
+@keyframes cdot{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-6px);}}
+.cctas{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.4rem;}
+.ccta{padding:.38rem .8rem;border-radius:999px;font-family:Poppins,sans-serif;font-size:.73rem;font-weight:500;cursor:pointer;border:1px solid rgba(17,189,184,.3);background:rgba(17,189,184,.09);color:#11BDB8;transition:all .18s;text-decoration:none;display:inline-block;}
+.ccta:hover{background:rgba(17,189,184,.18);border-color:rgba(17,189,184,.5);}
+.ccta.cc-primary{background:linear-gradient(135deg,#11BDB8,#0E8B78);color:#0A1410;border-color:transparent;font-weight:600;}
+.ccta.cc-primary:hover{opacity:.86;}
+.chat-inp-row{padding:.8rem 1rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.55rem;align-items:flex-end;}
+.chat-inp{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:.55rem .8rem;color:rgba(251,250,246,.88);font-family:Poppins,sans-serif;font-size:.81rem;resize:none;outline:none;min-height:36px;max-height:96px;line-height:1.4;transition:border-color .2s;}
+.chat-inp:focus{border-color:rgba(17,189,184,.38);}
+.chat-inp::placeholder{color:rgba(251,250,246,.28);}
+.chat-send-btn{width:34px;height:34px;background:linear-gradient(135deg,#11BDB8,#0E8B78);border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .18s,transform .18s;}
+.chat-send-btn:hover{opacity:.84;transform:scale(1.06);}
+.chat-send-btn:disabled{opacity:.35;cursor:default;transform:none;}
+@media(max-width:640px){.chat-panel{width:calc(100vw - 2.5rem);right:1.25rem;bottom:9.5rem;max-height:460px;}.chat-fab{right:1.25rem;bottom:5.75rem;}.whatsapp-float{right:1.25rem;bottom:1.25rem;}.music-float{left:1rem;bottom:1.25rem;}}
+</style>
+
+<div class="chat-fab">
+  <button class="chat-fab-btn" id="chatFabBtn" onclick="cpToggle()" aria-label="Chat con Plein">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span class="chat-pulse-dot" id="cpDot"></span>
+  </button>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-hdr">
+    <div class="chat-hdr-av">✈️</div>
+    <div class="chat-hdr-info">
+      <div class="chat-hdr-name">Plein · Tutto il Mundo</div>
+      <div class="chat-hdr-status">● En línea — Asistente de viajes</div>
+    </div>
+    <button class="chat-hdr-close" onclick="cpToggle()" aria-label="Cerrar chat">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-inp-row">
+    <textarea class="chat-inp" id="chatInp" placeholder="Escríbeme..." rows="1" onkeydown="cpKeydown(event)"></textarea>
+    <button class="chat-send-btn" id="chatSendBtn" onclick="cpSend()" aria-label="Enviar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 
 <!-- ============ HERRAMIENTAS & TIPS ============ -->
@@ -7547,6 +7642,22 @@ langMenuBtns.forEach(btn => {
     langToggle.setAttribute('aria-expanded', 'false');
   });
 });
+
+// ── Mobile nav (hamburger) ──
+const navBurger = document.getElementById('navBurger');
+const navLinksEl = document.querySelector('.nav-links');
+if (navBurger && navLinksEl) {
+  navBurger.addEventListener('click', () => {
+    const isOpen = navLinksEl.classList.toggle('mobile-open');
+    navBurger.classList.toggle('open', isOpen);
+    navBurger.setAttribute('aria-expanded', isOpen);
+  });
+  navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinksEl.classList.remove('mobile-open');
+    navBurger.classList.remove('open');
+    navBurger.setAttribute('aria-expanded', 'false');
+  }));
+}
 
 // Apply persisted language on load
 if (currentLang !== 'es') {
@@ -8106,26 +8217,7 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
 
 
 <!-- ============ FLOATING LANGUAGE SWITCHER ============ -->
-<div class="lang-float" id="langFloat">
-  <div class="lang-float-menu" id="langFloatMenu">
-    <button data-lang="es" class="active" id="langFloatEs">
-      <span class="lf-code">ES</span>
-      <span>Español</span>
-      <span class="lf-check">✓</span>
-    </button>
-    <div class="lang-divider"></div>
-    <button data-lang="en" id="langFloatEn">
-      <span class="lf-code">EN</span>
-      <span>English</span>
-      <span class="lf-check">✓</span>
-    </button>
-  </div>
-  <button class="lang-float-toggle" id="langFloatToggle" aria-label="Language">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13.5 13.5 0 0 1 0 18"/><path d="M12 3a13.5 13.5 0 0 0 0 18"/>
-    </svg>
-  </button>
-</div>
+
 
 
 <!-- ============ ROUTE MODALS ============ -->
@@ -12058,6 +12150,285 @@ function openWhatsApp(ctx) {
     </div>
   </div>
 </div>
+
+<script>
+// ── MUSIC PLAYER ──────────────────────────────────────────
+const mpAudio = document.getElementById('mpAudio');
+const mpBtn   = document.getElementById('mpBtn');
+const mpState = document.getElementById('mpState');
+const mpProg  = document.getElementById('mpProg');
+const mpFill  = document.getElementById('mpFill');
+let mpPlaying = false;
+
+function mpToggle() {
+  if (!mpAudio) return;
+  if (mpPlaying) {
+    mpAudio.pause(); mpPlaying = false;
+    mpBtn.classList.remove('mp-playing');
+    mpState.textContent = 'Soundtrack oficial';
+    mpProg.classList.remove('mp-vis');
+  } else {
+    mpAudio.play().then(() => {
+      mpPlaying = true;
+      mpBtn.classList.add('mp-playing');
+      mpState.textContent = 'Reproduciendo ♪';
+      mpProg.classList.add('mp-vis');
+    }).catch(() => { mpState.textContent = 'Subir theme.mp3 al repo'; });
+  }
+}
+if (mpAudio) {
+  mpAudio.addEventListener('timeupdate', () => {
+    if (mpAudio.duration) mpFill.style.width = (mpAudio.currentTime / mpAudio.duration * 100) + '%';
+  });
+  mpAudio.addEventListener('ended', () => {
+    mpPlaying = false; mpBtn.classList.remove('mp-playing');
+    mpState.textContent = 'Soundtrack oficial'; mpProg.classList.remove('mp-vis');
+  });
+}
+
+// ── AI CHAT ───────────────────────────────────────────────
+const CP_SYSTEM = `Eres Plein, el asistente de viajes de Tutto il Mundo (tuttoilmundo.agency). Tu nombre viene de "plane" — avión en inglés. Eres el alter ego digital de la agencia: conoces todas las rutas, los precios, los destinos y el estilo de la agencia porque la vives.
+
+PERSONALIDAD: Directo, cálido, como un cuate que sabe mucho de viajes. Nada corporativo. Tutéate siempre. Respuestas cortas (máx 3-4 líneas). Si escriben en inglés, responde en inglés.
+
+OBJETIVO: Ayudar genuinamente Y mover hacia la reserva. Termina siempre con pregunta o CTA claro.
+
+RUTAS (incluyen vuelos internacionales+domésticos, alojamiento, traslados, seguro básico):
+• Europa Máxima I & II → desde $56,000 MXN
+• Euroterránea I & II → desde ~$48,000 MXN
+• Islandia → desde $37,000 MXN (lo más épico para naturaleza)
+• Asia Perfecta → desde $79,000 MXN
+• Asia Completa / Justa / Sudeste Asiático → cotizar
+• Noruega / Atlántico Norte → cotizar
+• Sudamérica Épica / Perfecta / Metrópolis → desde ~$45,000 MXN
+• Patagonia / Fin del Mundo → cotizar
+• México Profundo / Colonial / Baja California → desde ~$18,000 MXN
+• Medio Oriente → cotizar
+FIGHTER CAMPS (artes marciales + viaje):
+Georgia $2,500 · Brasil $3,000 · Tailandia $2,000 · Japón $4,000 · Irlanda $3,500 · Las Vegas $4,500 USD
+
+APARTAR LUGAR: depósito $3,000 MXN → Stripe: https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01
+WHATSAPP (rutas custom, grupos, familias, visas): https://wa.me/525549517625
+
+CUÁNDO EMPUJAR A STRIPE: cuando preguntan cómo reservar, mencionan una ruta con interés real, preguntan disponibilidad o fechas.
+CUÁNDO ESCALAR A WHATSAPP: rutas personalizadas, viaje en familia, preguntas de visa, grupos, presupuesto muy específico.
+
+URGENCIA REAL (úsala, no la inventes): "temporada alta se llena 2-3 meses antes", "los vuelos directos desde CDMX tienen cupo limitado", "Islandia verano ya casi no tiene espacio".
+
+Al final de tu respuesta, cuando alguien muestra interés concreto, agrega botones así (literalmente, no como markdown, una línea por botón):
+[CTA:{"label":"Apartar mi lugar · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]
+[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625"}]
+
+Úsalos con criterio — solo cuando hay interés real, no en saludos.`;
+
+// ── PLEIN MODE ──────────────────────────────────────────────
+// 'faq' = respuestas predeterminadas (sin costo, sin API key)
+// 'llm' = IA real vía /api/chat (Claude Haiku, requiere ANTHROPIC_API_KEY en Vercel)
+// Para activar la IA real cuando esté lista, cambia esta línea a 'llm'.
+const PLEIN_MODE = 'faq';
+
+// Base de respuestas para el modo FAQ
+const CP_FAQ_FALLBACK = 'Esa la tengo que checar con calma 🙂 Te paso directo por WhatsApp, ahí te ayudan al toque.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]';
+const CP_FAQ_FALLBACK_EN = 'Let me check on that one 🙂 I\'ll connect you on WhatsApp, they can help you right away.\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]';
+
+const CP_FAQ = [
+  { keywords: ['privado','privada','grupal','solo nosotros','acompanantes','acompañantes','private','group tour','just us'],
+    answer: 'Privadas para ti y tus acompañantes — sin tours grupales ni guías que marquen el ritmo. Tu libertad total.',
+    answerEn: 'Private for you and whoever\'s traveling with you — no group tours or guides setting the pace. Total freedom.' },
+  { keywords: ['visa','pasaporte','tramite','trámite','passport'],
+    answer: 'Depende de tu pasaporte y el destino. Te orientamos exactamente qué necesitas y los canales oficiales — el trámite en sí es personal e intransferible.',
+    answerEn: 'It depends on your passport and the destination. We\'ll guide you on exactly what you need and the official channels — the application itself is personal.' },
+  { keywords: ['europa','francia','italia','espana','paris','euroterranea','londres','escocia','suiza','monaco','europe','france','italy','spain','london','scotland','switzerland'],
+    answer: 'Europa Máxima I & II desde $56,000 MXN — España, Francia, Mónaco, Italia y Suiza (Torre Eiffel, Coliseo, Lago di Como, Alpes, Gaudí en Barcelona, y hasta Londres/Escocia en la versión II). Euroterránea desde ~$48,000 MXN si prefieres algo más enfocado al Mediterráneo. Ambas incluyen vuelos, alojamiento, traslados y seguro básico. ¿Quieres apartar tu lugar?\n[CTA:{"label":"Apartar mi lugar · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625"}]',
+    answerEn: 'Europa Máxima I & II from $56,000 MXN — Spain, France, Monaco, Italy and Switzerland (Eiffel Tower, the Colosseum, Lake Como, the Alps, Gaudí in Barcelona, plus London/Scotland on version II). Euroterránea from ~$48,000 MXN if you\'d rather focus on the Mediterranean. Both include flights, lodging, transfers and basic insurance. Want to save your spot?\n[CTA:{"label":"Reserve my spot · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625"}]' },
+  { keywords: ['islandia','iceland','auroras','glaciar','glaciares','ring road','circulo dorado','northern lights','glacier','glaciers','golden circle'],
+    answer: 'Islandia desde $37,000 MXN — Ring Road completo: Reikiavik, Círculo Dorado, Costa Sur, Snæfellsnes y los Westfjords. Géiseres, glaciares, cascadas y auroras boreales o sol de medianoche según temporada. Incluye vuelos, alojamiento, traslados y seguro. En verano casi no queda espacio. ¿Te apunto?\n[CTA:{"label":"Apartar mi lugar · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625"}]',
+    answerEn: 'Iceland from $37,000 MXN — the full Ring Road: Reykjavik, the Golden Circle, the South Coast, Snæfellsnes and the Westfjords. Geysers, glaciers, waterfalls and northern lights or the midnight sun depending on the season. Includes flights, lodging, transfers and insurance. In high summer there\'s barely any space left. Want me to save you a spot?\n[CTA:{"label":"Reserve my spot · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625"}]' },
+  { keywords: ['asia','tailandia','japon','vietnam','sudeste','china','corea','singapur','malasia','camboya','thailand','japan','southeast asia','singapore','malaysia','cambodia','korea'],
+    answer: 'Asia Perfecta desde $79,000 MXN — combina países como Tailandia, Vietnam, Japón, Corea, Singapur, Malasia y China según la ruta. Asia Completa, Asia Justa y Sudeste Asiático se cotizan a tu medida con los destinos que más te interesen. ¿Te ayudamos a armarla por WhatsApp?\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'Asia Perfecta from $79,000 MXN — combines countries like Thailand, Vietnam, Japan, Korea, Singapore, Malaysia and China depending on the route. Asia Completa, Asia Justa and Southeast Asia are custom-quoted around whichever destinations interest you most. Want us to help put it together on WhatsApp?\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['sudamerica','peru','patagonia','argentina','chile','colombia','ecuador','bolivia','brasil','uruguay','calafate','ushuaia','torres del paine','south america','brazil'],
+    answer: 'Sudamérica Épica, Perfecta y Metrópolis desde ~$45,000 MXN — Brasil, Argentina, Uruguay y Chile son la base, con opción de extender a Patagonia (El Calafate, Ushuaia, Torres del Paine). Patagonia / Fin del Mundo se cotiza según fechas por el clima. ¿Cuál te interesa?\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'Sudamérica Épica, Perfecta and Metrópolis from ~$45,000 MXN — Brazil, Argentina, Uruguay and Chile are the core, with the option to extend into Patagonia (El Calafate, Ushuaia, Torres del Paine). Patagonia / Fin del Mundo is quoted by date due to weather. Which one are you into?\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['mexico','nacional','baja california','colonial','oaxaca','chiapas','palenque','cdmx','national','domestic'],
+    answer: 'México Profundo, Colonial y Baja California desde ~$18,000 MXN — Ciudad de México, Oaxaca (mezcal, mole, Monte Albán), Chiapas (San Cristóbal, Cañón del Sumidero) y Palenque, entre otros. Ideal si quieres algo más cercano, de menos días, sin perder la esencia de viaje independiente. ¿Te late alguna?',
+    answerEn: 'México Profundo, Colonial and Baja California from ~$18,000 MXN — Mexico City, Oaxaca (mezcal, mole, Monte Albán), Chiapas (San Cristóbal, the Sumidero Canyon) and Palenque, among others. Great if you want something closer, shorter, without losing that independent-travel feel. Any of these sound good?' },
+  { keywords: ['fighter','camp','camps','muay thai','boxeo','mma','artes marciales','entrenar','entrenamiento','jiu-jitsu','jiu jitsu','bjj','lucha','wrestling','judo','karate','boxing','training','martial arts'],
+    answer: 'Fighter Camps combina entrenamiento + viaje, todo en un precio (USD): Tailandia — Muay Thai/Kickboxing $2,000, Georgia — Wrestling/Grappling/MMA $2,500, Brasil — BJJ/Jiu-Jitsu/MMA $3,000, Irlanda & UK — MMA/Boxeo/Muay Thai $3,500, Japón — Judo/Karate/BJJ $4,000, Las Vegas — MMA/Boxeo/UFC $4,500. ¿Cuál te interesa?\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'Fighter Camps combine training + travel, all in one price (USD): Thailand — Muay Thai/Kickboxing $2,000, Georgia — Wrestling/Grappling/MMA $2,500, Brazil — BJJ/Jiu-Jitsu/MMA $3,000, Ireland & UK — MMA/Boxing/Muay Thai $3,500, Japan — Judo/Karate/BJJ $4,000, Las Vegas — MMA/Boxing/UFC $4,500. Which one are you into?\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['reservar','apartar','deposito','depósito','como reservo','cómo reservo','aparto','disponibilidad','fecha','fechas','book','booking','reserve','deposit','how do i book','availability','date','dates'],
+    answer: 'Para apartar tu lugar es un depósito de $3,000 MXN vía Stripe — seguro y directo, y se descuenta del precio total. Si reservas con fecha abierta, el depósito no vence hasta que la definas. ¿Lo hacemos?\n[CTA:{"label":"Apartar mi lugar · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]',
+    answerEn: 'To save your spot it\'s a $3,000 MXN deposit via Stripe — secure and direct, and it\'s deducted from the total price. If you book with an open date, the deposit doesn\'t expire until you set one. Want to do it?\n[CTA:{"label":"Reserve my spot · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]' },
+  { keywords: ['solo','sola','experiencia','principiante','primera vez','autoguiado','autoguiada','sin experiencia','alone','beginner','first time','no experience','self-guided','self guided'],
+    answer: 'Sí. Las rutas están diseñadas para ser autoguiadas, con itinerario detallado día a día y soporte disponible en todo momento. No se requiere experiencia previa viajando.',
+    answerEn: 'Yes. The routes are designed to be self-guided, with a detailed day-by-day itinerary and support available the whole time. No previous travel experience needed.' },
+  { keywords: ['incluye','que trae','qué trae','vuelos','hospedaje','alojamiento','seguro','traslados','que viene','que no incluye','include','includes','included','flights','lodging','accommodation','insurance','transfers','not included'],
+    answer: 'Cada ruta incluye vuelos internacionales y domésticos, alojamiento, traslados entre ciudades y países, seguro básico de viaje, itinerario día a día y soporte por WhatsApp durante todo el viaje. No incluye comidas, transporte local dentro de cada ciudad, entradas a museos/atracciones, ni visa (te orientamos, pero el trámite es personal).',
+    answerEn: 'Every route includes international and domestic flights, lodging, transfers between cities and countries, basic travel insurance, a day-by-day itinerary and WhatsApp support throughout the trip. It doesn\'t include meals, local transport within each city, museum or attraction entry fees, or visas (we guide you, but the process is personal).' },
+  { keywords: ['personalizada','a medida','medida','familia','grupo','grupos','ninos','niños','presupuesto','custom','tailored','family','group','groups','kids','budget'],
+    answer: 'Para rutas a medida, viajes en familia, grupos o presupuestos específicos, lo mejor es hablar directo por WhatsApp — te armamos algo 100% a tu medida con los destinos que quieras combinar.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'For custom routes, family trips, groups or specific budgets, it\'s best to chat directly on WhatsApp — they\'ll put together something 100% tailored to you with whichever destinations you want to combine.\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['meses sin intereses','msi','tarjeta','tarjetas','pagar a meses','mensualidades','installments','interest-free','credit card','monthly payments'],
+    answer: 'Sí, aceptamos tarjetas a 3, 6 y 12 meses sin intereses. Contáctanos por WhatsApp o por el formulario y te pasamos la liga de pago.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'Yes, we accept 3, 6 and 12-month interest-free installments on credit cards. Reach out on WhatsApp or via the form and we\'ll send you the payment link.\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['cancelar','cancelacion','cancelación','cambiar fecha','cambio de fecha','reembolso','cancel','change date','refund','reschedule'],
+    answer: 'Con 50+ días antes del viaje: devolvemos el depósito completo. Con menos de 50 días: el depósito cubre los gastos de gestión ya generados.',
+    answerEn: 'With 50+ days before the trip: full deposit refund. With less than 50 days: the deposit covers management costs already incurred.' },
+  { keywords: ['con cuanto tiempo','con cuánto tiempo','anticipacion','anticipación','antelacion','antelación','how far in advance','advance notice','how early'],
+    answer: 'Mínimo 6 a 8 semanas antes del viaje. Para temporada alta te recomendamos 3 a 4 meses de anticipación, sobre todo para Europa e Islandia en verano.',
+    answerEn: 'At least 6 to 8 weeks before the trip. For high season we recommend 3 to 4 months ahead, especially for Europe and Iceland in summer.' },
+  { keywords: ['agencia tradicional','diferencia','por que ustedes','por qué ustedes','que los hace diferentes','traditional agency','why you','difference','what makes you different'],
+    answer: 'Las agencias tradicionales cobran márgenes altísimos — la mayoría de tu dinero termina en comisiones, no en tu viaje. Nosotros no te forzamos a guías estrictos ni itinerarios apresurados: tú decides el ritmo, sin intermediarios que inflen el precio.',
+    answerEn: 'Traditional agencies charge huge margins — most of your money ends up in commissions, not your trip. We don\'t force you into strict guides or rushed itineraries: you set the pace, with no middlemen inflating the price.' },
+  { keywords: ['ruta','destino','paquete','opciones','adonde','a donde','donde puedo','lugares','viajes','que ofrecen','que tienen','catalogo','recomienda','route','destination','trip','where can i go','options','places','what do you have','recommend'],
+    answer: 'Tenemos 21 rutas: Europa, Islandia, Asia, Noruega/Atlántico Norte, Sudamérica, México, Medio Oriente y Fighter Camps — desde $18,000 MXN hasta $79,000 MXN. Todas privadas, sin grupos ni horarios forzados, y se ajustan a tu presupuesto. ¿Qué región te late más?',
+    answerEn: 'We\'ve got 21 routes: Europe, Iceland, Asia, Norway/North Atlantic, South America, Mexico, the Middle East and Fighter Camps — from $18,000 MXN up to $79,000 MXN. All private, no groups or fixed schedules, and they adapt to your budget. Which region sounds good to you?' },
+  { keywords: ['whatsapp','contacto','hablar','asesor','persona','humano','contact','talk','advisor','person','human'],
+    answer: 'Claro, te paso directo a WhatsApp.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625","p":1}]',
+    answerEn: 'Sure thing, here\'s our WhatsApp.\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/525549517625","p":1}]' },
+  { keywords: ['hola','buenas','buenos dias','buenos días','buenas tardes','buenas noches','que tal','que onda','hello','hey','good morning','good afternoon','good evening','whats up'],
+    answer: '¡Hola! ✈️ ¿A qué destino le tienes ganas — Europa, Asia, Islandia, Sudamérica, México o algo más intenso como un Fighter Camp? Cuéntame y te paso los detalles.',
+    answerEn: 'Hey! ✈️ Which destination has your eye on — Europe, Asia, Iceland, South America, Mexico, or something more intense like a Fighter Camp? Tell me and I\'ll send you the details.' },
+];
+
+function cpNormalize(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function cpDetectLang(text) {
+  const norm = cpNormalize(text);
+  const en = ['the','you','your','is','are','am','i','my','can','will','would','should','do','does','did','for','with','of','to','how much','what','where','when','price','cost','trip','travel','book','want','need','can you','please','hello','hi','thanks','thank you','included','available','do you','tell me','i want','i need'];
+  const es = ['que','como','donde','cuanto','cuesta','precio','quiero','necesito','hola','gracias','viaje','reservar','incluye','puedo','cuando','cual','para','con','los','las','del','una','un','esta','este'];
+  let enScore = 0, esScore = 0;
+  en.forEach(w => { if (new RegExp('\\b' + w.replace(/ /g,'\\s+') + '\\b').test(norm)) enScore++; });
+  es.forEach(w => { if (new RegExp('\\b' + w.replace(/ /g,'\\s+') + '\\b').test(norm)) esScore++; });
+  return enScore > esScore ? 'en' : 'es';
+}
+
+function cpFaqAnswer(text) {
+  const norm = cpNormalize(text);
+  const lang = cpDetectLang(text);
+  let best = null, bestScore = 0;
+  CP_FAQ.forEach(entry => {
+    let score = 0;
+    entry.keywords.forEach(k => { if (norm.includes(k)) score++; });
+    if (score > bestScore) { bestScore = score; best = entry; }
+  });
+  if (lang === 'en') return best ? (best.answerEn || best.answer) : CP_FAQ_FALLBACK_EN;
+  return best ? best.answer : CP_FAQ_FALLBACK;
+}
+
+let cpHistory = [];
+let cpOpen = false;
+let cpInited = false;
+
+function cpToggle() {
+  cpOpen = !cpOpen;
+  document.getElementById('chatPanel').classList.toggle('cp-open', cpOpen);
+  const dot = document.getElementById('cpDot');
+  if (dot) dot.style.display = cpOpen ? 'none' : '';
+  if (cpOpen && !cpInited) { cpInited = true; cpAddMsg('bot', '¡Hola! Soy Plein ✈️\n¿A dónde quieres ir este año? (Europa, Asia, Islandia, Sudamérica, México, Fighter Camps... o cómo reservar)'); }
+}
+
+function cpAddMsg(role, content) {
+  const el = document.getElementById('chatMsgs');
+  const ctaRe = /\[CTA:(\{.*?\})\]/g;
+  const btns = [];
+  let clean = content.replace(ctaRe, (_, j) => { try { btns.push(JSON.parse(j)); } catch(e){} return ''; }).trim();
+
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role; d.style.whiteSpace = 'pre-line'; d.textContent = clean;
+  el.appendChild(d);
+
+  if (btns.length) {
+    const bw = document.createElement('div'); bw.className = 'cctas';
+    btns.forEach(b => {
+      const a = document.createElement('a');
+      a.href = b.url; a.target = '_blank'; a.rel = 'noopener';
+      a.className = 'ccta' + (b.p ? ' cc-primary' : '');
+      a.textContent = b.label;
+      bw.appendChild(a);
+    });
+    el.appendChild(bw);
+  }
+  el.scrollTop = el.scrollHeight;
+}
+
+function cpTyping(show) {
+  const el = document.getElementById('chatMsgs');
+  const ex = document.getElementById('cpTypingEl');
+  if (show && !ex) {
+    const d = document.createElement('div');
+    d.className = 'cmsg typing'; d.id = 'cpTypingEl';
+    d.innerHTML = '<div class="cdots"><span></span><span></span><span></span></div>';
+    el.appendChild(d); el.scrollTop = el.scrollHeight;
+  } else if (!show && ex) ex.remove();
+}
+
+async function cpSendLLM() {
+  const inp = document.getElementById('chatInp');
+  const btn = document.getElementById('chatSendBtn');
+  const txt = inp.value.trim(); if (!txt) return;
+  inp.value = ''; inp.style.height = 'auto'; btn.disabled = true;
+  cpAddMsg('usr', txt);
+  cpHistory.push({ role: 'user', content: txt });
+  cpTyping(true);
+  try {
+    const ctrl = new AbortController();
+    const cpTimeout = setTimeout(() => ctrl.abort(), 15000);
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: cpHistory.slice(-12) }),
+      signal: ctrl.signal
+    });
+    clearTimeout(cpTimeout);
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    const reply = data.content?.[0]?.text || '';
+    if (!reply) throw new Error();
+    cpTyping(false); cpAddMsg('bot', reply);
+    cpHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    cpTyping(false);
+    cpAddMsg('bot', 'Algo falló de mi lado 😅 Escríbeme directo por WhatsApp y te respondo al tiro.\n[CTA:{"label":"Abrir WhatsApp","url":"https://wa.me/525549517625","p":1}]');
+  }
+  btn.disabled = false;
+  document.getElementById('chatInp').focus();
+}
+
+async function cpSendFaq() {
+  const inp = document.getElementById('chatInp');
+  const btn = document.getElementById('chatSendBtn');
+  const txt = inp.value.trim(); if (!txt) return;
+  inp.value = ''; inp.style.height = 'auto'; btn.disabled = true;
+  cpAddMsg('usr', txt);
+  cpHistory.push({ role: 'user', content: txt });
+  cpTyping(true);
+  let reply;
+  try {
+    reply = cpFaqAnswer(txt);
+  } catch(e) {
+    reply = CP_FAQ_FALLBACK;
+  }
+  setTimeout(() => {
+    cpTyping(false);
+    cpAddMsg('bot', reply);
+    cpHistory.push({ role: 'assistant', content: reply });
+    btn.disabled = false;
+    document.getElementById('chatInp').focus();
+  }, 450 + Math.random() * 350);
+}
+
+function cpSend() {
+  return PLEIN_MODE === 'llm' ? cpSendLLM() : cpSendFaq();
+}
+
+function cpKeydown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cpSend(); } }
+
+const cpInpEl = document.getElementById('chatInp');
+if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight,96)+'px'; });
+</script>
 
 </body>
 </html>
