@@ -23,7 +23,7 @@ FIGHTER CAMPS (artes marciales + viaje):
 Georgia $2,500 · Brasil $3,000 · Tailandia $2,000 · Japón $4,000 · Irlanda $3,500 · Las Vegas $4,500 USD
 
 APARTAR LUGAR: depósito $3,000 MXN → Stripe: https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01
-WHATSAPP (rutas custom, grupos, familias, visas): https://wa.me/525549517625
+WHATSAPP (rutas custom, grupos, familias, visas): https://wa.me/447476685715
 
 CUÁNDO EMPUJAR A STRIPE: cuando preguntan cómo reservar, mencionan una ruta con interés real, preguntan disponibilidad o fechas.
 CUÁNDO ESCALAR A WHATSAPP: rutas personalizadas, viaje en familia, preguntas de visa, grupos, presupuesto muy específico.
@@ -32,7 +32,7 @@ URGENCIA REAL (úsala, no la inventes): "temporada alta se llena 2-3 meses antes
 
 Al final de tu respuesta, cuando alguien muestra interés concreto, agrega botones así (literalmente, una línea por botón):
 [CTA:{"label":"Apartar mi lugar · $3,000 MXN","url":"https://buy.stripe.com/bJe00l892eSAfNOaF2cMM01","p":1}]
-[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/525549517625"}]
+[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/447476685715"}]
 
 Úsalos con criterio — solo cuando hay interés real, no en saludos.`;
 
