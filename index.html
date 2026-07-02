@@ -8,6 +8,44 @@
 <link rel="shortcut icon" href="favicon.svg">
 <meta name="description" content="No somos tu típica agencia de tours. Diseñamos rutas optimizadas para viajeros independientes que quieren explorar el mundo a su manera.">
 
+<!-- ── Social sharing (Open Graph / WhatsApp / Twitter) ── -->
+<link rel="canonical" href="https://tuttoilmundo.agency/">
+<meta name="theme-color" content="#11BDB8">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tuttoilmundo.agency/">
+<meta property="og:site_name" content="Tutto il Mundo">
+<meta property="og:title" content="Tutto il Mundo — Rutas de viaje para exploradores independientes">
+<meta property="og:description" content="No somos tu típica agencia de tours. 21 rutas por Europa, Asia, Islandia, Sudamérica y más — privadas, a tu ritmo, desde $18,000 MXN.">
+<meta property="og:image" content="https://tuttoilmundo.agency/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_MX">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tutto il Mundo — Rutas de viaje para exploradores independientes">
+<meta name="twitter:description" content="No somos tu típica agencia de tours. 21 rutas por Europa, Asia, Islandia, Sudamérica y más — privadas, a tu ritmo.">
+<meta name="twitter:image" content="https://tuttoilmundo.agency/img/og-image.jpg">
+
+<!-- ── Datos estructurados (Google) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "Tutto il Mundo",
+  "url": "https://tuttoilmundo.agency/",
+  "logo": "https://tuttoilmundo.agency/logo-hero.png",
+  "image": "https://tuttoilmundo.agency/img/og-image.jpg",
+  "description": "Agencia de viajes independiente. Rutas internacionales optimizadas y privadas para viajeros que exploran a su propio ritmo — sin buses masivos, sin guías presionando, sin itinerarios rígidos.",
+  "priceRange": "$18,000 - $79,000 MXN",
+  "areaServed": "MX",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Europa Máxima", "price": "56000", "priceCurrency": "MXN", "url": "https://tuttoilmundo.agency/" },
+    { "@type": "Offer", "name": "Islandia — Ring Road", "price": "37000", "priceCurrency": "MXN", "url": "https://tuttoilmundo.agency/" },
+    { "@type": "Offer", "name": "Asia Perfecta", "price": "79000", "priceCurrency": "MXN", "url": "https://tuttoilmundo.agency/" },
+    { "@type": "Offer", "name": "Sudamérica Perfecta", "price": "38000", "priceCurrency": "MXN", "url": "https://tuttoilmundo.agency/" }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1390,7 +1428,13 @@ footer {
     background:var(--paper); border-top:1px solid var(--line);
     box-shadow:0 20px 40px -15px rgba(10,20,16,.15);
     padding:.5rem 1.5rem 1rem;
+    max-height:calc(100vh - 70px);
+    max-height:calc(100dvh - 70px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
   }
+  body.nav-menu-open{overflow:hidden;}
   .nav-links.mobile-open li{width:100%;}
   .nav-links.mobile-open a{display:block;width:100%;padding:.85rem 0;border-bottom:1px solid var(--line);}
   .nav-links.mobile-open a::after{display:none;}
@@ -7542,7 +7586,7 @@ body::after {
 .chat-send-btn{width:34px;height:34px;background:linear-gradient(135deg,#11BDB8,#0E8B78);border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .18s,transform .18s;}
 .chat-send-btn:hover{opacity:.84;transform:scale(1.06);}
 .chat-send-btn:disabled{opacity:.35;cursor:default;transform:none;}
-@media(max-width:640px){.chat-panel{width:calc(100vw - 2.5rem);right:1.25rem;bottom:9.5rem;max-height:460px;}.chat-fab{right:1.25rem;bottom:5.75rem;}.whatsapp-float{right:1.25rem;bottom:1.25rem;}.music-float{left:1rem;bottom:1.25rem;}}
+@media(max-width:640px){.chat-panel{width:calc(100vw - 2.5rem);right:1.25rem;bottom:9.5rem;max-height:460px;}.chat-fab{right:1.25rem;bottom:5.75rem;}.whatsapp-float{right:1.25rem;bottom:1.25rem;}.music-float{left:1rem;bottom:1.25rem;}.chat-inp{font-size:16px;}}
 </style>
 
 <div class="chat-fab">
@@ -7726,11 +7770,13 @@ if (navBurger && navLinksEl) {
     const isOpen = navLinksEl.classList.toggle('mobile-open');
     navBurger.classList.toggle('open', isOpen);
     navBurger.setAttribute('aria-expanded', isOpen);
+    document.body.classList.toggle('nav-menu-open', isOpen);
   });
   navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     navLinksEl.classList.remove('mobile-open');
     navBurger.classList.remove('open');
     navBurger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-menu-open');
   }));
 }
 
