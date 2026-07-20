@@ -12351,7 +12351,7 @@ Al final de tu respuesta, cuando alguien muestra interés concreto, agrega boton
 // 'faq' = respuestas predeterminadas (sin costo, sin API key)
 // 'llm' = IA real vía /api/chat (Claude Haiku, requiere ANTHROPIC_API_KEY en Vercel)
 // Para activar la IA real cuando esté lista, cambia esta línea a 'llm'.
-const PLEIN_MODE = 'faq';
+const PLEIN_MODE = 'hybrid';
 
 // Base de respuestas para el modo FAQ
 const CP_FAQ_FALLBACK = 'Esa la tengo que checar con calma 🙂 Te paso directo por WhatsApp, ahí te ayudan al toque.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/447476685715","p":1}]';
@@ -12434,17 +12434,42 @@ function cpDetectLang(text) {
   return enScore > esScore ? 'en' : 'es';
 }
 
+// Coincidencia con frontera de prefijo: 'mexico' matchea "a mexico" pero NO "aeromexico";
+// los sufijos siguen permitidos ('ruta' matchea "rutas")
+function cpKwHit(norm, k) {
+  let idx = norm.indexOf(k);
+  while (idx !== -1) {
+    if (idx === 0 || !/[a-z0-9]/.test(norm[idx - 1])) return true;
+    idx = norm.indexOf(k, idx + 1);
+  }
+  return false;
+}
+
 function cpFaqAnswer(text) {
   const norm = cpNormalize(text);
   const lang = cpDetectLang(text);
   let best = null, bestScore = 0;
   CP_FAQ.forEach(entry => {
     let score = 0;
-    entry.keywords.forEach(k => { if (norm.includes(k)) score++; });
+    entry.keywords.forEach(k => { if (cpKwHit(norm, k)) score++; });
     if (score > bestScore) { bestScore = score; best = entry; }
   });
   if (lang === 'en') return best ? (best.answerEn || best.answer) : CP_FAQ_FALLBACK_EN;
   return best ? best.answer : CP_FAQ_FALLBACK;
+}
+
+// Devuelve la respuesta del FAQ si hay coincidencia real, o null si no la hay (para modo híbrido)
+function cpFaqMatch(text) {
+  const norm = cpNormalize(text);
+  const lang = cpDetectLang(text);
+  let best = null, bestScore = 0;
+  CP_FAQ.forEach(entry => {
+    let score = 0;
+    entry.keywords.forEach(k => { if (cpKwHit(norm, k)) score++; });
+    if (score > bestScore) { bestScore = score; best = entry; }
+  });
+  if (!best) return null;
+  return lang === 'en' ? (best.answerEn || best.answer) : best.answer;
 }
 
 let cpHistory = [];
@@ -12520,7 +12545,8 @@ async function cpSendLLM() {
     cpHistory.push({ role: 'assistant', content: reply });
   } catch(e) {
     cpTyping(false);
-    cpAddMsg('bot', 'Algo falló de mi lado 😅 Escríbeme directo por WhatsApp y te respondo al tiro.\n[CTA:{"label":"Abrir WhatsApp","url":"https://wa.me/447476685715","p":1}]');
+    const cpFb = (typeof cpDetectLang === 'function' && cpDetectLang(txt) === 'en') ? CP_FAQ_FALLBACK_EN : CP_FAQ_FALLBACK;
+    cpAddMsg('bot', cpFb);
   }
   btn.disabled = false;
   document.getElementById('chatInp').focus();
@@ -12549,8 +12575,22 @@ async function cpSendFaq() {
   }, 450 + Math.random() * 350);
 }
 
+// Modo híbrido: FAQ primero (gratis, instantáneo, nunca inventa) → IA solo si el FAQ no sabe
+let cpLlmCount = 0;
+const CP_LLM_MAX = 20; // tope de mensajes IA por sesión (protege el crédito de API)
+async function cpSendHybrid() {
+  const inp = document.getElementById('chatInp');
+  const txt = (inp && inp.value || '').trim(); if (!txt) return;
+  const local = cpFaqMatch(txt);
+  if (local !== null || cpLlmCount >= CP_LLM_MAX) return cpSendFaq();
+  cpLlmCount++;
+  return cpSendLLM();
+}
+
 function cpSend() {
-  return PLEIN_MODE === 'llm' ? cpSendLLM() : cpSendFaq();
+  if (PLEIN_MODE === 'llm') return cpSendLLM();
+  if (PLEIN_MODE === 'hybrid') return cpSendHybrid();
+  return cpSendFaq();
 }
 
 function cpKeydown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cpSend(); } }
