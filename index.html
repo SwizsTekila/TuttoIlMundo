@@ -2694,6 +2694,15 @@ footer {
 }
 .fmb-submit:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
+/* Variante clara del formulario (fondo blanco, no modal-dark) — usada en Ruta Personalizada */
+.fmb-form-light .fmb-input {
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.fmb-form-light .fmb-input::placeholder { color: var(--muted); }
+.fmb-form-light .fmb-submit { color: #fff; }
+
 /* ====== EXPERIENCE CATEGORIES ====== */
 .exp-section {
   padding: 10rem 3rem;
@@ -5037,7 +5046,7 @@ body::after {
       <button class="region-btn" data-region="europa" data-lat="48" data-lon="10">
         <div class="region-info">
           <div class="region-name"><span class="italic">Europa</span></div>
-          <div class="region-count" data-es="3 rutas activas" data-en="3 active routes">3 rutas activas</div>
+          <div class="region-count" data-es="7 rutas activas" data-en="7 active routes">7 rutas activas</div>
         </div>
         <div class="region-arrow">→</div>
       </button>
@@ -5045,7 +5054,7 @@ body::after {
       <button class="region-btn" data-region="asia" data-lat="20" data-lon="105">
         <div class="region-info">
           <div class="region-name"><span class="italic">Asia</span></div>
-          <div class="region-count" data-es="1 ruta activa" data-en="1 active route">1 ruta activa</div>
+          <div class="region-count" data-es="4 rutas activas" data-en="4 active routes">4 rutas activas</div>
         </div>
         <div class="region-arrow">→</div>
       </button>
@@ -5061,7 +5070,7 @@ body::after {
       <button class="region-btn" data-region="sudamerica" data-lat="-15" data-lon="-60">
         <div class="region-info">
           <div class="region-name"><span class="italic">Sudamérica</span></div>
-          <div class="region-count" data-es="1 ruta activa" data-en="1 active route">1 ruta activa</div>
+          <div class="region-count" data-es="5 rutas activas" data-en="5 active routes">5 rutas activas</div>
         </div>
         <div class="region-arrow">→</div>
       </button>
@@ -5087,7 +5096,7 @@ body::after {
       <button class="region-btn" data-region="mediterraneo" data-lat="36" data-lon="18">
         <div class="region-info">
           <div class="region-name"><span class="italic">Mediterráneo</span></div>
-          <div class="region-count" data-es="1 ruta activa" data-en="1 active route">1 ruta activa</div>
+          <div class="region-count" data-es="2 rutas activas" data-en="2 active routes">2 rutas activas</div>
         </div>
         <div class="region-arrow">→</div>
       </button>
@@ -5888,6 +5897,110 @@ body::after {
         <div class="route-countries"><span class="country-chip">Turquía</span><span class="country-chip">Egipto</span><span class="country-chip">Jordania</span><span class="country-chip">UAE</span><span class="country-chip">Omán</span></div>
         <div class="route-cta"><span class="route-price">desde <span class="price-num">$100</span> / día</span><span>Ver ruta <span class="arrow">→</span></span></div>
       </div></a></article>
+<article class="route-card" data-region="europa" data-min-price="40">
+      <a href="#" class="route-link" onclick="openModal('modal-route-europa-budget');return false;">
+      <div class="route-visual" style="background:linear-gradient(135deg, #E8ECFF 0%, #C5CDFF 100%);">
+        <img src="img/amsterdam_canal_noche.jpg" class="rv-photo" alt="" loading="lazy">
+        <div class="rv-overlay"></div>
+        <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+  <path d="M60 230 Q100 200 150 195 Q195 190 230 150 Q265 115 300 90 Q315 78 330 55"
+        stroke="rgba(255,255,255,0.93)" stroke-width="2.5" fill="none" stroke-dasharray="7 6"/>
+  <g fill="rgba(17,189,184,1)">
+    <circle cx="60" cy="230" r="5"/><circle cx="150" cy="195" r="4"/>
+    <circle cx="230" cy="150" r="4"/><circle cx="330" cy="55" r="6"/>
+  </g>
+  <g font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.96)" letter-spacing="1">
+    <text x="42" y="250">MAD</text><text x="132" y="213">PAR</text>
+    <text x="212" y="168">BRU</text><text x="308" y="45">AMS</text>
+  </g>
+</svg>
+      </div>
+      <div class="route-body">
+        <div class="route-meta">
+          <span class="mono">EUR-03</span>
+          <span class="dot">·</span>
+          <span class="mono" data-es="10–12 días" data-en="10–12 days">10–12 días</span>
+          <span class="dot">·</span>
+          <span class="mono">🇪🇸 🇫🇷 </span>
+          <span class="dot">·</span>
+          <span class="status" data-es="ACTIVA" data-en="ACTIVE">ACTIVA</span>
+        </div>
+        <h3 class="route-name"><span class="italic">Europa Budget</span> 💶</h3>
+        <p class="route-desc" data-es="Cuatro capitales, presupuesto real. Lo esencial de Europa sin gastar de más." data-en="Four capitals, real budget. The essentials of Europe without overspending.">Cuatro capitales, presupuesto real. Lo esencial de Europa sin gastar de más.</p>
+        <div class="route-countries"><span class="country-chip">Madrid</span><span class="country-chip">París</span><span class="country-chip">Brujas</span><span class="country-chip">Ámsterdam</span></div>
+        <div class="route-cta">
+          <span class="route-price">desde <span class="price-num">$40</span> / día <span style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">(~$30,000 MXN)</span></span>
+          <span><span data-es="Ver ruta" data-en="View route">Ver ruta</span> <span class="arrow">→</span></span>
+        </div>
+      </div>
+      </a>
+    </article>
+<article class="route-card" data-region="europa" data-min-price="30">
+      <a href="#" class="route-link" onclick="openModal('modal-route-bienvenida-europa');return false;">
+      <div class="route-visual" style="background:linear-gradient(135deg, #FEF5E7 0%, #FAE3B0 100%);">
+        <img src="https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=700&q=75" class="rv-photo" alt="" loading="lazy">
+        <div class="rv-overlay"></div>
+        <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+  <path d="M150 80 Q165 130 175 170 Q182 195 190 220"
+        stroke="rgba(255,255,255,0.93)" stroke-width="2.5" fill="none" stroke-dasharray="7 6"/>
+  <g fill="rgba(17,189,184,1)">
+    <circle cx="150" cy="80" r="6"/><circle cx="190" cy="220" r="6"/>
+  </g>
+  <g font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.96)" letter-spacing="1">
+    <text x="132" y="65">MAD</text><text x="172" y="240">TOL</text>
+  </g>
+</svg>
+      </div>
+      <div class="route-body">
+        <div class="route-meta">
+          <span class="mono">EUR-04</span>
+          <span class="dot">·</span>
+          <span class="mono" data-es="7 días" data-en="7 days">7 días</span>
+          <span class="dot">·</span>
+          <span class="mono">🇪🇸</span>
+          <span class="dot">·</span>
+          <span class="status" data-es="ACTIVA" data-en="ACTIVE">ACTIVA</span>
+        </div>
+        <h3 class="route-name"><span class="italic">Bienvenida a Europa</span> 🇪🇸</h3>
+        <p class="route-desc" data-es="Tu primer viaje a Europa, sin complicarte. Madrid a fondo más un día en Toledo." data-en="Your first trip to Europe, made simple. Madrid in depth plus a day in Toledo.">Tu primer viaje a Europa, sin complicarte. Madrid a fondo más un día en Toledo.</p>
+        <div class="route-countries"><span class="country-chip">Madrid</span><span class="country-chip">Toledo</span></div>
+        <div class="route-cta">
+          <span class="route-price">desde <span class="price-num">$30</span> / día <span style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">(~$22,000 MXN)</span></span>
+          <span><span data-es="Ver ruta" data-en="View route">Ver ruta</span> <span class="arrow">→</span></span>
+        </div>
+      </div>
+      </a>
+    </article>
+<article class="route-card route-card-custom" data-region="all">
+      <a href="#" class="route-link" onclick="openModal('modal-route-personalizada');return false;">
+      <div class="route-visual" style="background:linear-gradient(135deg, #0A1410 0%, #1A2A22 100%);">
+        <div class="rv-overlay" style="background:linear-gradient(160deg, rgba(17,189,184,0.20) 0%, rgba(8,15,12,0.55) 100%);"></div>
+        <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+          <circle cx="200" cy="140" r="72" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+          <path d="M118 140 Q160 88 200 140 Q240 192 282 140" stroke="rgba(126,255,212,0.92)" stroke-width="2.5" fill="none" stroke-dasharray="7 6"/>
+          <circle cx="118" cy="140" r="5" fill="rgba(126,255,212,0.95)"/>
+          <circle cx="282" cy="140" r="5" fill="rgba(139,155,255,0.95)"/>
+          <text x="200" y="151" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="30" fill="rgba(255,255,255,0.9)">?</text>
+        </svg>
+      </div>
+      <div class="route-body">
+        <div class="route-meta">
+          <span class="mono">CUSTOM</span>
+          <span class="dot">·</span>
+          <span class="mono" data-es="tú decides" data-en="you decide">tú decides</span>
+          <span class="dot">·</span>
+          <span class="status" data-es="A MEDIDA" data-en="TAILORED">A MEDIDA</span>
+        </div>
+        <h3 class="route-name"><span class="italic">Personalizada</span> ✏️</h3>
+        <p class="route-desc" data-es="¿No encuentras tu destino? Arma tu propia ruta con nosotros, desde cero." data-en="Can't find your destination? Build your own route with us, from scratch.">¿No encuentras tu destino? Arma tu propia ruta con nosotros, desde cero.</p>
+        <div class="route-countries"><span class="country-chip" data-es="Cualquier destino" data-en="Any destination">Cualquier destino</span></div>
+        <div class="route-cta">
+          <span class="route-price" data-es="Precio personalizado" data-en="Custom pricing">Precio personalizado</span>
+          <span><span data-es="Armar mi ruta" data-en="Build my route">Armar mi ruta</span> <span class="arrow">→</span></span>
+        </div>
+      </div>
+      </a>
+    </article>
 
   </div>
   </section>
@@ -7801,6 +7914,10 @@ filterBtns.forEach(btn => {
         card.style.display = filter === 'all' ? 'flex' : 'none';
         return;
       }
+      if (card.classList.contains('route-card-custom')) {
+        card.style.display = 'flex';
+        return;
+      }
       const region = card.dataset.region;
       card.style.display = (filter === 'all' || region === filter) ? 'flex' : 'none';
     });
@@ -8018,6 +8135,12 @@ function applyBudgetFilter() {
       card.classList.remove('filtered-out');
       return;
     }
+    if (card.classList.contains('route-card-custom')) {
+      // Tarjeta "Personalizada": siempre visible, sin importar filtro de continente o presupuesto
+      card.style.display = 'flex';
+      card.classList.remove('filtered-out');
+      return;
+    }
     const price = parseInt(card.dataset.minPrice || '0', 10);
     const cardRegion = card.dataset.region;
     const regionMatch = region === 'all' || cardRegion === region;
@@ -8036,14 +8159,19 @@ function applyBudgetFilter() {
     }
   });
 
-  // Sort visible cards by price (ascending)
-  const visibleCards = cards.filter(c => !c.classList.contains('placeholder') && c.style.display !== 'none');
+  // Sort visible cards by price (ascending) — excluye placeholders y la tarjeta personalizada
+  const visibleCards = cards.filter(c => !c.classList.contains('placeholder') && !c.classList.contains('route-card-custom') && c.style.display !== 'none');
   visibleCards.sort((a, b) => parseInt(a.dataset.minPrice, 10) - parseInt(b.dataset.minPrice, 10));
   visibleCards.forEach(card => routesGrid.appendChild(card));
 
-  // Placeholders at end
+  // Placeholders al final
   document.querySelectorAll('.route-card.placeholder').forEach(p => {
     if (p.style.display !== 'none') routesGrid.appendChild(p);
+  });
+
+  // Tarjeta "Personalizada" siempre al final del todo
+  document.querySelectorAll('.route-card.route-card-custom').forEach(p => {
+    routesGrid.appendChild(p);
   });
 }
 
@@ -9039,6 +9167,237 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-route-europa-budget" role="dialog" aria-modal="true">
+  <div class="modal-panel">
+    <button class="modal-close" onclick="closeModal('modal-route-europa-budget')" aria-label="Close">×</button>
+    <div class="modal-scroll">
+      <div class="modal-hero-top" style="border-top:3px solid #4A7FBF;">
+        <div class="modal-eyebrow" style="color:#4A7FBF;">EUR-03 · 10–12 días · <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;">$30,000 MXN</span></div>
+        <h2 class="modal-title">Europa Budget 💶</h2>
+        <p class="modal-summary">Cuatro capitales, presupuesto real. Lo esencial de Europa sin gastar de más — Madrid, París, Brujas y Ámsterdam.</p>
+        <div class="modal-tags"><span class="modal-tag">Madrid · París · Brujas · Ámsterdam</span></div>
+        <div class="modal-stats-row">
+          <div class="modal-stat"><span class="ms-val" style="color:#4A7FBF">10–12</span><span class="ms-lbl">días</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#4A7FBF">3</span><span class="ms-lbl">países</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#4A7FBF">4</span><span class="ms-lbl">ciudades</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#4A7FBF">$40</span><span class="ms-lbl">/ día desde</span></div>
+        </div>
+      </div>
+      <div class="modal-map-wrap">
+        <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" style="width:100%;max-height:220px;">
+          <path d="M60 230 Q100 200 150 195 Q195 190 230 150 Q265 115 300 90 Q315 78 330 55"
+                stroke="#4A7FBF" stroke-width="2" fill="none" stroke-dasharray="6 5" class="rmap-path"/>
+          <g fill="#4A7FBF">
+            <circle cx="60" cy="230" r="6"/><circle cx="150" cy="195" r="5"/>
+            <circle cx="230" cy="150" r="5"/><circle cx="330" cy="55" r="7"/>
+          </g>
+          <g font-family="'Inter Tight',sans-serif" font-size="10" fill="#2E5A94" letter-spacing="1" font-weight="600">
+            <text x="42" y="250">MAD</text><text x="132" y="213">PAR</text>
+            <text x="212" y="168">BRU</text><text x="308" y="45">AMS</text>
+          </g>
+        </svg>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label" style="color:#4A7FBF">Itinerario completo</div>
+          <div class="mc-itin-list">
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇪🇸</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">Madrid <span class="mc-itin-days">— 3 días</span></div>
+                <div class="mc-itin-desc">Prado, Retiro, tapas en Malasaña, Puerta del Sol. Punto de partida.</div>
+              </div>
+            </div>
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇫🇷</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">París <span class="mc-itin-days">— 3 días</span></div>
+                <div class="mc-itin-desc">Torre Eiffel, Louvre, Montmartre. Lo esencial parisino sin prisas.</div>
+              </div>
+            </div>
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇧🇪</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">Brujas <span class="mc-itin-days">— 2 días</span></div>
+                <div class="mc-itin-desc">Canales medievales, chocolate belga, cerveza artesanal, centro UNESCO.</div>
+              </div>
+            </div>
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇳🇱</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">Ámsterdam <span class="mc-itin-days">— 3 días</span></div>
+                <div class="mc-itin-desc">Canales, Rijksmuseum, Van Gogh Museum, bicicletas, barrio Jordaan.</div>
+              </div>
+            </div>
+          </div>
+          <div class="mc-note">Ruta pensada para presupuesto ajustado sin sacrificar lo esencial. Alojamiento tipo hostal/budget hotel.</div>
+        </div>
+        <div class="modal-section"><div class="modal-section-label">Highlights</div><div class="mc-highlights"><span class="mc-highlight-tag">★ Torre Eiffel</span><span class="mc-highlight-tag">★ Canales de Ámsterdam</span><span class="mc-highlight-tag">★ Brujas medieval</span><span class="mc-highlight-tag">★ Museo del Prado</span></div></div>
+        <div class="modal-inc-grid">
+          <div>
+            <div class="modal-section-label" style="color:#4A7FBF">Qué incluye</div>
+            <div class="mc-inc-item"><span class="mc-check">✓</span><span>Itinerario día a día</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Vuelos internacionales gestionados</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Alojamiento tipo hostal/budget</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Transporte entre ciudades</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Seguro de viaje incluido</span></div>
+          </div>
+          <div>
+            <div class="modal-section-label" style="color:#6B726D">No incluido</div>
+            <div class="mc-inc-item"><span class="mc-x">×</span><span>Comidas y bebidas</span></div><div class="mc-inc-item"><span class="mc-x">×</span><span>Transporte local</span></div><div class="mc-inc-item"><span class="mc-x">×</span><span>Entradas a museos/atracciones</span></div><div class="mc-inc-item" style="color:var(--teal-dark);border-top:1px dashed var(--line);margin-top:.3rem;padding-top:.3rem;"><span style="color:var(--teal-dark);font-weight:600;">+</span><span><em>Upgrade a hotel disponible</em></span></div>
+          </div>
+        </div>
+        <div class="modal-cta-wrap">
+          <a href="#contacto" class="modal-cta-btn" onclick="closeModal('modal-route-europa-budget');window._waCtx='europa-budget'">
+            <span data-es="Aplicar a esta ruta" data-en="Apply for this route">Aplicar a esta ruta</span><span class="arrow">→</span>
+          </a>
+          <a href="https://www.passportindex.org" target="_blank" rel="noopener" class="modal-cta-passport">
+            <div class="mcp-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="11" r="3"/><path d="M8 7.5Q10 5.5 12 5.5Q14 5.5 16 7.5"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="9.5" y1="19.5" x2="14.5" y2="19.5"/></svg></div>
+            <div class="mcp-text">
+              <span class="mcp-label" data-es="Requisitos de entrada" data-en="Entry requirements">Requisitos de entrada</span>
+              <span class="mcp-sub" data-es="Verifica visas con tu pasaporte" data-en="Check visa requirements for your passport">Verifica visas con tu pasaporte ↗</span>
+            </div>
+          </a>
+          <button class="modal-stripe-btn" onclick="stripeReserve('europa-budget')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            <span data-es="Apartar mi lugar · $3,000 MXN" data-en="Reserve my spot · MX$3,000">Apartar mi lugar · $3,000 MXN</span>
+            <span class="msb-badge" data-es="Depósito" data-en="Deposit">Depósito</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-route-bienvenida-europa" role="dialog" aria-modal="true">
+  <div class="modal-panel">
+    <button class="modal-close" onclick="closeModal('modal-route-bienvenida-europa')" aria-label="Close">×</button>
+    <div class="modal-scroll">
+      <div class="modal-hero-top" style="border-top:3px solid #6B8FD9;">
+        <div class="modal-eyebrow" style="color:#6B8FD9;">EUR-04 · 7 días · <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;">$22,000 MXN</span></div>
+        <h2 class="modal-title">Bienvenida a Europa 🇪🇸</h2>
+        <p class="modal-summary">Tu primer viaje a Europa, sin complicarte. Madrid a fondo más un día completo en Toledo.</p>
+        <div class="modal-tags"><span class="modal-tag">Madrid · Toledo</span></div>
+        <div class="modal-stats-row">
+          <div class="modal-stat"><span class="ms-val" style="color:#6B8FD9">7</span><span class="ms-lbl">días</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#6B8FD9">1</span><span class="ms-lbl">país</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#6B8FD9">2</span><span class="ms-lbl">ciudades</span></div>
+          <div class="modal-stat"><span class="ms-val" style="color:#6B8FD9">$30</span><span class="ms-lbl">/ día desde</span></div>
+        </div>
+      </div>
+      <div class="modal-map-wrap">
+        <svg viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" style="width:100%;max-height:220px;">
+          <path d="M150 80 Q165 130 175 170 Q182 195 190 220" stroke="#6B8FD9" stroke-width="2" fill="none" stroke-dasharray="6 5" class="rmap-path"/>
+          <g fill="#6B8FD9"><circle cx="150" cy="80" r="7"/><circle cx="190" cy="220" r="7"/></g>
+          <g font-family="'Inter Tight',sans-serif" font-size="10" fill="#4A62A8" letter-spacing="1" font-weight="600">
+            <text x="120" y="65">MADRID</text><text x="150" y="240">TOLEDO</text>
+          </g>
+        </svg>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label" style="color:#6B8FD9">Itinerario completo</div>
+          <div class="mc-itin-list">
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇪🇸</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">Madrid <span class="mc-itin-days">— 5 días</span></div>
+                <div class="mc-itin-desc">Museo del Prado, Palacio Real, Retiro, Gran Vía, tapas en Malasaña, vida nocturna. Tiempo real para conocer la ciudad sin correr.</div>
+              </div>
+            </div>
+            <div class="mc-itin-step">
+              <div class="mc-itin-flag">🇪🇸</div>
+              <div class="mc-itin-body">
+                <div class="mc-itin-country">Toledo <span class="mc-itin-days">— 2 días</span></div>
+                <div class="mc-itin-desc">Ciudad medieval Patrimonio UNESCO. Catedral, Alcázar, mirador del Valle, talleres de damasquinado. A 30 min de Madrid en tren.</div>
+              </div>
+            </div>
+          </div>
+          <div class="mc-note">Ideal si es tu primera vez en Europa y quieres empezar sin abrumarte — una sola base, ritmo tranquilo.</div>
+        </div>
+        <div class="modal-section"><div class="modal-section-label">Highlights</div><div class="mc-highlights"><span class="mc-highlight-tag">★ Museo del Prado</span><span class="mc-highlight-tag">★ Palacio Real</span><span class="mc-highlight-tag">★ Toledo medieval</span><span class="mc-highlight-tag">★ Mirador del Valle</span></div></div>
+        <div class="modal-inc-grid">
+          <div>
+            <div class="modal-section-label" style="color:#6B8FD9">Qué incluye</div>
+            <div class="mc-inc-item"><span class="mc-check">✓</span><span>Itinerario día a día</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Vuelos internacionales gestionados</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Alojamiento en Madrid</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Traslado / tren a Toledo</span></div><div class="mc-inc-item"><span class="mc-check">✓</span><span>Seguro de viaje incluido</span></div>
+          </div>
+          <div>
+            <div class="modal-section-label" style="color:#6B726D">No incluido</div>
+            <div class="mc-inc-item"><span class="mc-x">×</span><span>Comidas y bebidas</span></div><div class="mc-inc-item"><span class="mc-x">×</span><span>Transporte local (metro)</span></div><div class="mc-inc-item"><span class="mc-x">×</span><span>Entradas a museos/atracciones</span></div>
+          </div>
+        </div>
+        <div class="modal-cta-wrap">
+          <a href="#contacto" class="modal-cta-btn" onclick="closeModal('modal-route-bienvenida-europa');window._waCtx='bienvenida-europa'">
+            <span data-es="Aplicar a esta ruta" data-en="Apply for this route">Aplicar a esta ruta</span><span class="arrow">→</span>
+          </a>
+          <a href="https://www.passportindex.org" target="_blank" rel="noopener" class="modal-cta-passport">
+            <div class="mcp-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="11" r="3"/><path d="M8 7.5Q10 5.5 12 5.5Q14 5.5 16 7.5"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="9.5" y1="19.5" x2="14.5" y2="19.5"/></svg></div>
+            <div class="mcp-text">
+              <span class="mcp-label" data-es="Requisitos de entrada" data-en="Entry requirements">Requisitos de entrada</span>
+              <span class="mcp-sub" data-es="Verifica visas con tu pasaporte" data-en="Check visa requirements for your passport">Verifica visas con tu pasaporte ↗</span>
+            </div>
+          </a>
+          <button class="modal-stripe-btn" onclick="stripeReserve('bienvenida-europa')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            <span data-es="Apartar mi lugar · $3,000 MXN" data-en="Reserve my spot · MX$3,000">Apartar mi lugar · $3,000 MXN</span>
+            <span class="msb-badge" data-es="Depósito" data-en="Deposit">Depósito</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-route-personalizada" role="dialog" aria-modal="true">
+  <div class="modal-panel">
+    <button class="modal-close" onclick="closeModal('modal-route-personalizada')" aria-label="Close">×</button>
+    <div class="modal-scroll">
+      <div class="modal-hero-top" style="border-top:3px solid var(--teal-dark);">
+        <div class="modal-eyebrow" style="color:var(--teal-dark);">CUSTOM · <span data-es="Precio personalizado" data-en="Custom pricing">Precio personalizado</span></div>
+        <h2 class="modal-title">Ruta Personalizada ✏️</h2>
+        <p class="modal-summary" data-es="¿Tu destino no está en el catálogo, o quieres combinar varios? Cuéntanos qué te imaginas y lo diseñamos contigo." data-en="Your destination isn't in the catalog, or you want to combine a few? Tell us what you're picturing and we'll design it with you.">¿Tu destino no está en el catálogo, o quieres combinar varios? Cuéntanos qué te imaginas y lo diseñamos contigo.</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label" style="color:var(--teal-dark)" data-es="Cómo funciona" data-en="How it works">Cómo funciona</div>
+          <div class="mc-inc-item"><span class="mc-check">✓</span><span data-es="Nos cuentas destino(s), fechas y presupuesto aproximado" data-en="You tell us destination(s), dates and rough budget">Nos cuentas destino(s), fechas y presupuesto aproximado</span></div>
+          <div class="mc-inc-item"><span class="mc-check">✓</span><span data-es="Te armamos una propuesta de itinerario en 24–48 horas" data-en="We build you an itinerary proposal in 24–48 hours">Te armamos una propuesta de itinerario en 24–48 horas</span></div>
+          <div class="mc-inc-item"><span class="mc-check">✓</span><span data-es="Ajustamos hasta que quede exacto a lo que quieres" data-en="We adjust until it's exactly what you want">Ajustamos hasta que quede exacto a lo que quieres</span></div>
+        </div>
+        <div class="modal-section">
+          <form class="fmb-form-wrap fmb-form-light" action="https://formspree.io/f/xqewgqjg" method="POST" onsubmit="fightSubmit(event,this)">
+<input type="hidden" name="_subject" value="✏️ Ruta Personalizada — Tutto il Mundo">
+<input type="text" name="_gotcha" style="display:none">
+            <div class="fmb-form-title" data-es="Cuéntanos tu ruta" data-en="Tell us your route">Cuéntanos tu ruta</div>
+            <div class="fmb-form-grid">
+              <input type="text" placeholder="Nombre" class="fmb-input" name="nombre" required>
+              <input type="email" placeholder="Email" class="fmb-input" name="email" required>
+              <input type="tel" placeholder="WhatsApp" class="fmb-input" name="telefono">
+              <input type="text" placeholder="¿Cuándo?" class="fmb-input" name="cuando">
+              <input type="text" placeholder="Destino(s) que quieres" class="fmb-input" name="destino" required>
+              <input type="text" placeholder="Presupuesto aproximado" class="fmb-input" name="presupuesto">
+            </div>
+            <textarea class="fmb-input fmb-textarea" name="mensaje" placeholder="Cuéntanos más: cuántos viajan, qué buscan, ideas que ya tengan..."></textarea>
+            <button class="fmb-submit" type="submit" style="background:var(--teal-dark)">
+              <span data-es="Enviar mi idea de ruta →" data-en="Send my route idea →">Enviar mi idea de ruta →</span>
+            </button>
+          </form>
+        </div>
+        <div class="modal-cta-wrap">
+          <button class="modal-stripe-btn" onclick="stripeReserve('personalizada')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            <span data-es="Apartar mi lugar · $3,000 MXN" data-en="Reserve my spot · MX$3,000">Apartar mi lugar · $3,000 MXN</span>
+            <span class="msb-badge" data-es="Depósito" data-en="Deposit">Depósito</span>
+          </button>
+          <a href="https://www.passportindex.org" target="_blank" rel="noopener" class="modal-cta-passport">
+            <div class="mcp-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="11" r="3"/><path d="M8 7.5Q10 5.5 12 5.5Q14 5.5 16 7.5"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="9.5" y1="19.5" x2="14.5" y2="19.5"/></svg></div>
+            <div class="mcp-text">
+              <span class="mcp-label" data-es="Requisitos de entrada" data-en="Entry requirements">Requisitos de entrada</span>
+              <span class="mcp-sub" data-es="Verifica visas con tu pasaporte" data-en="Check visa requirements for your passport">Verifica visas con tu pasaporte ↗</span>
+            </div>
+          </a>
+          <a href="https://wa.me/447476685715" target="_blank" rel="noopener" class="modal-cta-btn">
+            <span data-es="Hablar por WhatsApp" data-en="Chat on WhatsApp">Hablar por WhatsApp</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="modal-route-sa-metropolis" role="dialog" aria-modal="true">
   <div class="modal-panel">
     <button class="modal-close" onclick="closeModal('modal-route-sa-metropolis')" aria-label="Close">×</button>
@@ -12409,7 +12768,7 @@ const CP_FAQ = [
   { keywords: ['ruta','destino','paquete','opciones','adonde','a donde','donde puedo','lugares','viajes','que ofrecen','que tienen','catalogo','recomienda','route','destination','trip','where can i go','options','places','what do you have','recommend'],
     answer: 'Tenemos 21 rutas: Europa, Islandia, Asia, Noruega/Atlántico Norte, Sudamérica, México, Medio Oriente y Fighter Camps — desde $18,000 MXN hasta $79,000 MXN. Todas privadas, sin grupos ni horarios forzados, y se ajustan a tu presupuesto. ¿Qué región te late más?',
     answerEn: 'We\'ve got 21 routes: Europe, Iceland, Asia, Norway/North Atlantic, South America, Mexico, the Middle East and Fighter Camps — from $18,000 MXN up to $79,000 MXN. All private, no groups or fixed schedules, and they adapt to your budget. Which region sounds good to you?' },
-  { keywords: ['whatsapp','contacto','hablar','asesor','persona','humano','contact','talk','advisor','person','human'],
+  { keywords: ['whatsapp','contacto','hablar','asesor','humano','contact','talk','advisor','person','human'],
     answer: 'Claro, te paso directo a WhatsApp.\n[CTA:{"label":"Hablar por WhatsApp","url":"https://wa.me/447476685715","p":1}]',
     answerEn: 'Sure thing, here\'s our WhatsApp.\n[CTA:{"label":"Chat on WhatsApp","url":"https://wa.me/447476685715","p":1}]' },
   { keywords: ['español','espanol','en español','en espanol','spanish','en spanish','habla español','habla espanol','hablo español','responde en español','ingles','inglés','en ingles','en inglés','english','in english','speak english','respond in english','change language','cambiar idioma'],
@@ -12459,7 +12818,8 @@ function cpFaqAnswer(text) {
 }
 
 // Devuelve la respuesta del FAQ si hay coincidencia real, o null si no la hay (para modo híbrido)
-function cpFaqMatch(text) {
+function cpFaqMatch(text, minScore) {
+  minScore = minScore || 1;
   const norm = cpNormalize(text);
   const lang = cpDetectLang(text);
   let best = null, bestScore = 0;
@@ -12468,7 +12828,7 @@ function cpFaqMatch(text) {
     entry.keywords.forEach(k => { if (cpKwHit(norm, k)) score++; });
     if (score > bestScore) { bestScore = score; best = entry; }
   });
-  if (!best) return null;
+  if (!best || bestScore < minScore) return null;
   return lang === 'en' ? (best.answerEn || best.answer) : best.answer;
 }
 
@@ -12581,7 +12941,12 @@ const CP_LLM_MAX = 20; // tope de mensajes IA por sesión (protege el crédito d
 async function cpSendHybrid() {
   const inp = document.getElementById('chatInp');
   const txt = (inp && inp.value || '').trim(); if (!txt) return;
-  const local = cpFaqMatch(txt);
+  // Primer mensaje: cualquier coincidencia de FAQ basta (rápido y gratis).
+  // Una vez que la IA ya está llevando la conversación, solo un match FUERTE
+  // (2+ palabras clave) puede regresar al FAQ — evita que una sola palabra suelta
+  // (ej. "Vietnam", "persona", "que tal") saque de contexto una charla ya en curso.
+  const minScore = cpLlmCount > 0 ? 2 : 1;
+  const local = cpFaqMatch(txt, minScore);
   if (local !== null || cpLlmCount >= CP_LLM_MAX) return cpSendFaq();
   cpLlmCount++;
   return cpSendLLM();
