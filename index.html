@@ -13,9 +13,9 @@
 <script>
 /* v64 multipágina: cada sección vive en su página. TM_PAGES=false regresa a una sola página con modales. */
 window.TM_PAGES = true;
-window.TM_PAGE_MAP = {"inicio":["inicio","hx-strip","destacadas","como-funciona","proceso","manifesto","confianza"],"rutas":["rutas","globo"],"ruta":["ruta"],"designer":["designer"],"temporadas":["temporadas","pasaporte"],"experiencias":["paises","escalera","experiencias","fighter"],"nosotros":["nosotros","historia","galeria"],"precio":["transparencia","pricing","reserva"],"contacto":["contacto","faq"]};
+window.TM_PAGE_MAP = {"inicio":["inicio","hx-strip","destacadas","globo","designer","como-funciona","pricing","confianza","contacto"],"rutas":["ph-rutas","rutas","globo"],"ruta":["ruta"],"designer":["ph-designer","designer","proceso"],"temporadas":["ph-temporadas","temporadas","pasaporte"],"experiencias":["ph-experiencias","paises","escalera","experiencias","fighter"],"nosotros":["ph-nosotros","nosotros","manifesto","historia","galeria"],"precio":["ph-precio","transparencia","pricing","reserva"],"contacto":["ph-contacto","contacto","faq"]};
 (function(){var h=(location.hash||'').slice(1),m=window.TM_PAGE_MAP,p='inicio';
-if(/^ruta-/.test(h))p='ruta';else if(m[h])p=h;else for(var k in m){if(m[k].indexOf(h)>-1){p=k;break;}}
+if(/^ruta-/.test(h))p='ruta';else if(m[h])p=h;else for(var k in m){if(k!=='inicio'&&m[k].indexOf(h)>-1){p=k;break;}}
 document.documentElement.setAttribute('data-pg',p);})();
 </script>
 <meta name="theme-color" content="#0A1410" id="metaTheme">
@@ -57,8 +57,8 @@ document.documentElement.setAttribute('data-pg',p);})();
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600;700;800&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
 
 <style>
 :root {
@@ -5344,26 +5344,55 @@ html { background: var(--paper); }
 </style>
 <style>
 /* ===== v64: multipágina ===== */
-html[data-pg="inicio"] .tm-pg:not([data-pg-of="inicio"]) { display: none !important; }
-html[data-pg="rutas"] .tm-pg:not([data-pg-of="rutas"]) { display: none !important; }
-html[data-pg="ruta"] .tm-pg:not([data-pg-of="ruta"]) { display: none !important; }
-html[data-pg="designer"] .tm-pg:not([data-pg-of="designer"]) { display: none !important; }
-html[data-pg="temporadas"] .tm-pg:not([data-pg-of="temporadas"]) { display: none !important; }
-html[data-pg="experiencias"] .tm-pg:not([data-pg-of="experiencias"]) { display: none !important; }
-html[data-pg="nosotros"] .tm-pg:not([data-pg-of="nosotros"]) { display: none !important; }
-html[data-pg="precio"] .tm-pg:not([data-pg-of="precio"]) { display: none !important; }
-html[data-pg="contacto"] .tm-pg:not([data-pg-of="contacto"]) { display: none !important; }
+html[data-pg="inicio"] .tm-pg:not([data-pg-of~="inicio"]) { display: none !important; }
+html[data-pg="rutas"] .tm-pg:not([data-pg-of~="rutas"]) { display: none !important; }
+html[data-pg="ruta"] .tm-pg:not([data-pg-of~="ruta"]) { display: none !important; }
+html[data-pg="designer"] .tm-pg:not([data-pg-of~="designer"]) { display: none !important; }
+html[data-pg="temporadas"] .tm-pg:not([data-pg-of~="temporadas"]) { display: none !important; }
+html[data-pg="experiencias"] .tm-pg:not([data-pg-of~="experiencias"]) { display: none !important; }
+html[data-pg="nosotros"] .tm-pg:not([data-pg-of~="nosotros"]) { display: none !important; }
+html[data-pg="precio"] .tm-pg:not([data-pg-of~="precio"]) { display: none !important; }
+html[data-pg="contacto"] .tm-pg:not([data-pg-of~="contacto"]) { display: none !important; }
 .tm-route { display: block; }
 html:not([data-pg="ruta"]) .tm-route { display: none !important; }
 .tm-enter { animation: tmPageIn .55s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes tmPageIn { from { opacity: 0; transform: translateY(14px); } }
 @media (prefers-reduced-motion: reduce) { .tm-enter { animation: none; } }
-/* páginas que no empiezan con foto oscura: nav sólida desde arriba */
-html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled), html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) { background: rgba(251,250,246,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-color: var(--line); }
-html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-lockup, html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a, html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-links > li > a { color: var(--ink); }
-html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle, html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) .lang-toggle { color: var(--ink); border-color: var(--line); }
-html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span, html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) .nav-burger span { background: var(--ink); }
-html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="designer"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="temporadas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="experiencias"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="nosotros"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="precio"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, html[data-pg="contacto"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark { background: none; padding: 0; }
+/* encabezado de cada página: se siente como una página nueva */
+.tm-phero { position: relative; min-height: min(56vh, 560px); display: flex; align-items: flex-end; color: #fff; background: #0A1410; overflow: hidden; isolation: isolate; }
+.tm-phero-glow { position: absolute; inset: 0; z-index: -1; background: radial-gradient(60% 70% at 85% 10%, rgba(46,223,210,.32), transparent 60%), radial-gradient(50% 60% at 10% 90%, rgba(91,108,217,.28), transparent 60%), radial-gradient(40% 40% at 60% 70%, rgba(142,242,182,.14), transparent 60%), #0A1410; }
+.tm-phero-glow::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.2px); background-size: 26px 26px; -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%); mask-image: linear-gradient(180deg, #000, transparent 85%); }
+.tm-phero-in { width: 100%; max-width: 1240px; margin: 0 auto; padding: 9rem 3rem 3.6rem; }
+.tm-phero .rp-title { max-width: 16ch; }
+.tm-phero-links { position: static; display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .4rem; padding: 0; background: none; border: 0; backdrop-filter: none; }
+.tm-phero-links a { font-family: var(--font-display); font-weight: 600; font-size: .85rem; color: #fff; text-decoration: none; padding: .55rem 1rem; border-radius: 99px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: background .2s, transform .2s; }
+.tm-phero-links a:hover { background: rgba(46,223,210,.22); transform: translateY(-1px); }
+@media (max-width: 720px) { .tm-phero { min-height: 56svh; } .tm-phero-in { padding: 7.5rem 1.25rem 2.6rem; } }
+/* logo = inicio */
+.logo-lockup { position: relative; }
+.logo-lockup .logo-mark { transition: transform .6s cubic-bezier(.3,1.4,.5,1), box-shadow .3s; }
+.logo-lockup:hover .logo-mark { transform: rotate(-20deg) scale(1.1); box-shadow: 0 0 0 4px rgba(46,223,210,.35); border-radius: 50%; }
+.logo-lockup .logo-text { transition: opacity .25s; }
+.logo-lockup::after { content: '← Inicio'; position: absolute; left: 50%; top: calc(100% + 6px); transform: translate(-50%, -4px); opacity: 0; pointer-events: none; white-space: nowrap; font-family: var(--font-display); font-size: .72rem; font-weight: 600; letter-spacing: .02em; color: #fff; background: rgba(10,20,16,.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: .3rem .7rem; border-radius: 99px; transition: opacity .2s, transform .2s; }
+html[lang="en"] .logo-lockup::after { content: '← Home'; }
+.logo-lockup:hover::after { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: none) { .logo-lockup::after { display: none; } }
+/* WhatsApp y Plein más grandes */
+@media (min-width: 641px) {
+  .whatsapp-float { width: 68px !important; height: 68px !important; }
+  .whatsapp-float svg { width: 34px; height: 34px; }
+  .chat-fab { bottom: 7.4rem !important; right: 2.25rem !important; }
+  .chat-fab-btn { width: 62px !important; height: 62px !important; }
+  .chat-fab-btn svg { width: 28px; height: 28px; }
+  .chat-panel { bottom: 12rem !important; }
+}
+@media (max-width: 640px) {
+  .whatsapp-float { width: 60px !important; height: 60px !important; }
+  .chat-fab-btn { width: 56px !important; height: 56px !important; }
+  .chat-fab { bottom: 6.1rem !important; }
+}
+/* globo: que no crezca más que su columna */
+#globeContainer { min-width: 0; max-width: 100%; overflow: hidden; }
 /* página activa en el menú */
 .nav-links > li > a.tm-active { color: var(--teal-dark) !important; }
 .nav-links > li > a.tm-active::after { width: 100% !important; transform: scaleX(1) !important; }
@@ -5605,9 +5634,7 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 <section class="hero hx tm-pg" id="inicio" data-pg-of="inicio">
   <div class="hx-bg" aria-hidden="true">
     <img class="hx-slide is-active" src="img/hero/lofoten-1920.jpg" srcset="img/hero/lofoten-960.jpg 960w, img/hero/lofoten-1920.jpg 1920w" sizes="100vw" alt="" fetchpriority="high" data-place="Lofoten, Noruega" data-place-en="Lofoten, Norway" data-route="modal-route-noruega-ruta">
-    <img class="hx-slide" data-src="img/hero/lauterbrunnen-1920.jpg" data-srcset="img/hero/lauterbrunnen-960.jpg 960w, img/hero/lauterbrunnen-1920.jpg 1440w" sizes="100vw" alt="" data-place="Lauterbrunnen, Suiza" data-place-en="Lauterbrunnen, Switzerland" data-route="modal-route-europa-maxima-ii">
     <img class="hx-slide" data-src="img/hero/rio-1920.jpg" data-srcset="img/hero/rio-960.jpg 960w, img/hero/rio-1920.jpg 1920w" sizes="100vw" alt="" data-place="Río de Janeiro, Brasil" data-place-en="Rio de Janeiro, Brazil" data-route="modal-route-sa-perfecta">
-    <img class="hx-slide" data-src="img/hero/feroe-1920.jpg" data-srcset="img/hero/feroe-960.jpg 960w, img/hero/feroe-1920.jpg 1480w" sizes="100vw" alt="" data-place="Islas Feroe" data-place-en="Faroe Islands" data-route="modal-route-atlantico-norte">
   </div>
   <div class="hx-shade" aria-hidden="true"></div>
 
@@ -5839,6 +5866,48 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
   <div class="tm-all-routes"><a href="#rutas" class="tm-all-routes-btn"><span data-es="Ver las 23 rutas" data-en="See all 23 routes">Ver las 23 rutas</span><span class="arrow">→</span></a></div>
 </section>
 <section class="tm-route tm-pg" id="ruta" data-pg-of="ruta" aria-live="polite"></section>
+<header class="tm-phero tm-pg" id="ph-rutas" data-pg-of="rutas"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Rutas" data-en="Routes">Rutas</span></div>
+  <div class="rp-eyebrow mono" data-es="RUTAS" data-en="ROUTES">RUTAS</div>
+  <h1 class="rp-title" data-es-html='Todas las <em>rutas.</em>' data-en-html="Every <em>route.</em>">Todas las <em>rutas.</em></h1>
+  <p class="rp-summary" data-es="Cada ruta fue construida después de recorrerla. Filtra por región o presupuesto y abre la que te llame." data-en="Every route was built after walking it. Filter by region or budget and open the one that calls you.">Cada ruta fue construida después de recorrerla. Filtra por región o presupuesto y abre la que te llame.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#rutas" data-es="Catálogo" data-en="Catalog">Catálogo</a><a href="#globo" data-es="Globo interactivo" data-en="Interactive globe">Globo interactivo</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-designer" data-pg-of="designer"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Diseña Tu Ruta" data-en="Design Your Route">Diseña Tu Ruta</span></div>
+  <div class="rp-eyebrow mono" data-es="DISEÑA TU RUTA" data-en="DESIGN YOUR ROUTE">DISEÑA TU RUTA</div>
+  <h1 class="rp-title" data-es-html='Diseña tu <em>ruta.</em>' data-en-html="Design your <em>route.</em>">Diseña tu <em>ruta.</em></h1>
+  <p class="rp-summary" data-es="Elige destinos, días y presupuesto. Te sugerimos rutas reales al momento y la afinamos contigo." data-en="Pick destinations, days and budget. We suggest real routes instantly and fine-tune them with you.">Elige destinos, días y presupuesto. Te sugerimos rutas reales al momento y la afinamos contigo.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#designer" data-es="Diseñador" data-en="Designer">Diseñador</a><a href="#proceso" data-es="Proceso" data-en="Process">Proceso</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-temporadas" data-pg-of="temporadas"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Cuándo Viajar" data-en="When To Go">Cuándo Viajar</span></div>
+  <div class="rp-eyebrow mono" data-es="CUÁNDO VIAJAR" data-en="WHEN TO GO">CUÁNDO VIAJAR</div>
+  <h1 class="rp-title" data-es-html='Cuándo <em>viajar.</em>' data-en-html="When to <em>go.</em>">Cuándo <em>viajar.</em></h1>
+  <p class="rp-summary" data-es="Clima, precios y multitudes mes a mes por región. Y si tu pasaporte te deja entrar." data-en="Weather, prices and crowds month by month, by region. And whether your passport lets you in.">Clima, precios y multitudes mes a mes por región. Y si tu pasaporte te deja entrar.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#temporadas" data-es="Temporadas" data-en="Seasons">Temporadas</a><a href="#pasaporte" data-es="Pasaporte" data-en="Passport">Pasaporte</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-experiencias" data-pg-of="experiencias"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Experiencias" data-en="Experiences">Experiencias</span></div>
+  <div class="rp-eyebrow mono" data-es="EXPERIENCIAS" data-en="EXPERIENCES">EXPERIENCIAS</div>
+  <h1 class="rp-title" data-es-html='Experiencias <em>únicas.</em>' data-en-html="Unique <em>experiences.</em>">Experiencias <em>únicas.</em></h1>
+  <p class="rp-summary" data-es="Viajes a un solo país, niveles de viaje, experiencias únicas y Fighter Camps." data-en="Single-country trips, travel levels, unique experiences and Fighter Camps.">Viajes a un solo país, niveles de viaje, experiencias únicas y Fighter Camps.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#paises" data-es="Un solo país" data-en="Single country">Un solo país</a><a href="#escalera" data-es="Niveles" data-en="Levels">Niveles</a><a href="#experiencias" data-es="Experiencias" data-en="Experiences">Experiencias</a><a href="#fighter" data-es="Fighter Camps" data-en="Fighter Camps">Fighter Camps</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-nosotros" data-pg-of="nosotros"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Nosotros" data-en="About Us">Nosotros</span></div>
+  <div class="rp-eyebrow mono" data-es="NOSOTROS" data-en="ABOUT US">NOSOTROS</div>
+  <h1 class="rp-title" data-es-html='Quiénes <em>somos.</em>' data-en-html="Who <em>we are.</em>">Quiénes <em>somos.</em></h1>
+  <p class="rp-summary" data-es="Quiénes somos, cómo pensamos el viaje y el mundo visto desde adentro." data-en="Who we are, how we think about travel and the world seen from within.">Quiénes somos, cómo pensamos el viaje y el mundo visto desde adentro.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#nosotros" data-es="Por qué nosotros" data-en="Why us">Por qué nosotros</a><a href="#manifesto" data-es="Manifiesto" data-en="Manifesto">Manifiesto</a><a href="#historia" data-es="Historia" data-en="Story">Historia</a><a href="#galeria" data-es="Galería" data-en="Gallery">Galería</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-precio" data-pg-of="precio"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Precio Honesto" data-en="Honest Pricing">Precio Honesto</span></div>
+  <div class="rp-eyebrow mono" data-es="PRECIO HONESTO" data-en="HONEST PRICING">PRECIO HONESTO</div>
+  <h1 class="rp-title" data-es-html='Precio <em>honesto.</em>' data-en-html="Honest <em>pricing.</em>">Precio <em>honesto.</em></h1>
+  <p class="rp-summary" data-es="Sin impuestos escondidos, sin suplementos, sin letras chiquitas. Y apartas con un depósito." data-en="No hidden taxes, no supplements, no fine print. And you reserve with a deposit.">Sin impuestos escondidos, sin suplementos, sin letras chiquitas. Y apartas con un depósito.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#transparencia" data-es="Transparencia" data-en="Transparency">Transparencia</a><a href="#pricing" data-es="Presupuesto" data-en="Budget">Presupuesto</a><a href="#reserva" data-es="Reserva" data-en="Reserve">Reserva</a></div></div></header>
+<header class="tm-phero tm-pg" id="ph-contacto" data-pg-of="contacto"><div class="tm-phero-glow"></div><div class="tm-phero-in">
+  <div class="rp-crumbs mono"><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a><span>/</span><span data-es="Contacto" data-en="Contact">Contacto</span></div>
+  <div class="rp-eyebrow mono" data-es="CONTACTO" data-en="CONTACT">CONTACTO</div>
+  <h1 class="rp-title" data-es-html='Hablemos de tu <em>viaje.</em>' data-en-html="Let&#39;s talk about your <em>trip.</em>">Hablemos de tu <em>viaje.</em></h1>
+  <p class="rp-summary" data-es="Cuéntanos tu idea y te respondemos en menos de 24 horas." data-en="Tell us your idea and we reply within 24 hours.">Cuéntanos tu idea y te respondemos en menos de 24 horas.</p>
+  <div class="tm-phero-links" role="navigation" aria-label="Secciones"><a href="#contacto" data-es="Escríbenos" data-en="Write to us">Escríbenos</a><a href="#faq" data-es="Preguntas frecuentes" data-en="FAQ">Preguntas frecuentes</a></div></div></header>
 
 
 <!-- ============ RUTAS ============ -->
@@ -6446,7 +6515,7 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 
 
 <!-- ============ GLOBO INTERACTIVO ============ -->
-<section class="globe-section tm-pg" id="globo" data-pg-of="rutas">
+<section class="globe-section tm-pg" id="globo" data-pg-of="inicio rutas">
   <canvas class="glb-stars" id="glbStars" aria-hidden="true"></canvas>
   <div class="globe-header">
     <div>
@@ -6543,7 +6612,7 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 
 
 <!-- ============ ROUTE DESIGNER ============ -->
-<section class="designer-section tm-pg" id="designer" data-pg-of="designer">
+<section class="designer-section tm-pg" id="designer" data-pg-of="inicio designer">
   <div class="designer-header">
     <div>
       <div class="section-label">
@@ -6925,7 +6994,7 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 </section>
 
 <!-- ============ PROCESO ============ -->
-<section class="process tm-pg" id="proceso" data-pg-of="inicio">
+<section class="process tm-pg" id="proceso" data-pg-of="designer">
   <div class="process-header">
     <div>
       <div class="section-label">
@@ -6975,56 +7044,7 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 </section>
 
 <!-- ============ MANIFIESTO ============ -->
-<section class="manifesto tm-pg" id="manifesto" data-pg-of="inicio">
-  <div class="manifesto-inner">
-    <div class="manifesto-heading">
-      <div class="section-label">
-        <span class="num">06</span>
-        <span data-es="Manifiesto" data-en="Manifesto">Manifiesto</span>
-      </div>
-      <h2 data-es-html='Viaje diseñado para <span class="italic">exploradores reales</span>.' data-en-html='Travel designed for <span class="italic">real explorers</span>.'>
-        Viaje diseñado para <span class="italic">exploradores reales</span>.
-      </h2>
-    </div>
 
-    <div class="manifesto-body">
-      <p data-es-html='Creemos que el mejor viaje no se vende en paquete. Se <em>diseña</em> alrededor de quién eres, qué buscas y el ritmo al que quieres moverte.' data-en-html='We believe the best trips aren&#39;t sold in packages. They&#39;re <em>designed</em> around who you are, what you&#39;re looking for, and the pace you want to move at.'>
-        Creemos que el mejor viaje no se vende en paquete. Se <em>diseña</em> alrededor de quién eres, qué buscas y el ritmo al que quieres moverte.
-      </p>
-      <p data-es-html='Los buses turísticos, las filas de guías con banderitas, los itinerarios que te arrastran por diez países en seis días, <span class="highlight">eso no es viajar. Es consumir.</span>' data-en-html='Tour buses, the guide queues with little flags, the itineraries that drag you through ten countries in six days, <span class="highlight">that&#39;s not traveling. That&#39;s consuming.</span>'>
-        Los buses turísticos, las filas de guías con banderitas, los itinerarios que te arrastran por diez países en seis días, <span class="highlight">eso no es viajar. Es consumir.</span>
-      </p>
-      <p data-es="Nosotros hacemos lo opuesto. Te escuchamos, estudiamos tu destino, y diseñamos la ruta más inteligente posible, optimizando logística, transporte, alojamiento y tiempos, para que tú te enfoques solo en vivirlo." data-en="We do the opposite. We listen to you, study your destination, and design the smartest possible route, optimizing logistics, transport, accommodation and timing, so all you have to focus on is living it.">
-        Nosotros hacemos lo opuesto. Te escuchamos, estudiamos tu destino, y diseñamos la ruta más inteligente posible, optimizando logística, transporte, alojamiento y tiempos, para que tú te enfoques solo en vivirlo.
-      </p>
-
-      <div class="manifesto-divider"></div>
-
-      <div class="contrast-grid">
-        <div class="contrast-col no">
-          <h4 data-es="Lo que NO hacemos" data-en="What we DON'T do">Lo que NO hacemos</h4>
-          <ul>
-            <li data-es="Tours grupales con 40 personas" data-en="Group tours with 40 people">Tours grupales con 40 personas</li>
-            <li data-es="Buses turísticos con guías presionando" data-en="Tour buses with rushing guides">Buses turísticos con guías presionando</li>
-            <li data-es="Itinerarios rígidos de 10 países en 7 días" data-en="Rigid 10-countries-in-7-days itineraries">Itinerarios rígidos de 10 países en 7 días</li>
-            <li data-es="Restaurantes para turistas con sobreprecio" data-en="Overpriced tourist-trap restaurants">Restaurantes para turistas con sobreprecio</li>
-            <li data-es="Paradas forzadas en tiendas de souvenirs" data-en="Forced souvenir-shop stops">Paradas forzadas en tiendas de souvenirs</li>
-          </ul>
-        </div>
-        <div class="contrast-col yes">
-          <h4 data-es="Lo que SÍ hacemos" data-en="What we DO">Lo que SÍ hacemos</h4>
-          <ul>
-            <li data-es="Rutas diseñadas para viajeros independientes" data-en="Routes designed for independent travelers">Rutas diseñadas para viajeros independientes</li>
-            <li data-es="Logística optimizada que tú controlas" data-en="Optimized logistics you control">Logística optimizada que tú controlas</li>
-            <li data-es="Recomendaciones probadas en el terreno" data-en="Ground-tested recommendations">Recomendaciones probadas en el terreno</li>
-            <li data-es="Experiencias auténticas fuera del circuito masivo" data-en="Authentic off-the-mass-circuit experiences">Experiencias auténticas fuera del circuito masivo</li>
-            <li data-es="Libertad total, tú decides cuánto tiempo" data-en="Total freedom, you decide how long">Libertad total: tú decides cuánto tiempo</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ TEMPORADAS DEL AÑO ============ -->
 <section class="seasons-section tm-pg" id="temporadas" data-pg-of="temporadas">
@@ -7945,7 +7965,61 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 
 
 <!-- ============ PRICING / RANGE ============ -->
-<section class="pricing tm-pg" id="pricing" data-pg-of="precio">
+<section class="trust-section tm-pg" id="transparencia" data-pg-of="precio">
+  <div class="trust-inner">
+    <div class="trust-label" data-es="Precio honesto" data-en="Honest pricing">Precio honesto</div>
+    <h2 class="trust-title">
+      <span data-es="El precio que ves" data-en="The price you see">El precio que ves</span><br>
+      <span class="italic" data-es="es el precio que pagas." data-en="is the price you pay.">es el precio que pagas.</span>
+    </h2>
+    <p class="trust-sub" data-es="Otras agencias anuncian un precio bajo y después te suman cientos o miles de dólares en &quot;impuestos&quot; y suplementos que nunca aparecieron en el anuncio. Nosotros no hacemos eso." data-en="Other agencies advertise a low price and then add hundreds or thousands of dollars in &quot;taxes&quot; and surcharges that never appeared in the ad. We don't do that.">Otras agencias anuncian un precio bajo y después te suman cientos o miles de dólares en "impuestos" y suplementos que nunca aparecieron en el anuncio. Nosotros no hacemos eso.</p>
+
+    <div class="trust-compare">
+      <div class="tc-card tc-them">
+        <div class="tc-head" data-es="Agencia tradicional" data-en="Traditional agency">Agencia tradicional</div>
+        <div class="tc-price"><span class="tc-strike">$1,499 USD</span> <span class="tc-addon">+ $899 IMP</span></div>
+        <div class="tc-real" data-es="Costo real: $2,398 USD, 60% más de lo anunciado" data-en="Real cost: $2,398 USD, 60% more than advertised">Costo real: $2,398 USD, 60% más de lo anunciado</div>
+        <div class="tc-line"><span class="tc-x">×</span><span data-es="Impuestos aéreos cobrados aparte" data-en="Airline taxes charged separately">Impuestos aéreos cobrados aparte</span></div>
+        <div class="tc-line"><span class="tc-x">×</span><span data-es="Suplementos por fecha de salida" data-en="Departure date surcharges">Suplementos por fecha de salida</span></div>
+        <div class="tc-line"><span class="tc-x">×</span><span data-es="Propinas obligatorias no incluidas" data-en="Mandatory tips not included">Propinas obligatorias no incluidas</span></div>
+        <div class="tc-line"><span class="tc-x">×</span><span data-es="Excursiones &quot;opcionales&quot; que son el viaje real" data-en="&quot;Optional&quot; excursions that are the actual trip">Excursiones "opcionales" que son el viaje real</span></div>
+      </div>
+      <div class="tc-card tc-us">
+        <div class="tc-head">Tutto il Mundo</div>
+        <div class="tc-price" data-es="Un solo número" data-en="One single number">Un solo número</div>
+        <div class="tc-real" data-es="Lo que cotizamos es lo que pagas" data-en="What we quote is what you pay">Lo que cotizamos es lo que pagas</div>
+        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Vuelos con impuestos ya incluidos" data-en="Flights with taxes already included">Vuelos con impuestos ya incluidos</span></div>
+        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Sin suplementos escondidos por temporada" data-en="No hidden seasonal surcharges">Sin suplementos escondidos por temporada</span></div>
+        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Sin propinas forzadas ni cargos sorpresa" data-en="No forced tips or surprise charges">Sin propinas forzadas ni cargos sorpresa</span></div>
+        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Te decimos exactamente qué incluye y qué no" data-en="We tell you exactly what's included and what isn't">Te decimos exactamente qué incluye y qué no</span></div>
+      </div>
+    </div>
+
+    <div class="trust-docs">
+      <a href="https://www.inm.gob.mx/menores/publico/solicitud.html" target="_blank" rel="noopener" class="td-card">
+        <div class="td-icon">👨‍👩‍👧</div>
+        <div>
+          <div class="td-title" data-es="Menores viajando sin sus padres ↗" data-en="Minors traveling without parents ↗">Menores viajando sin sus padres ↗</div>
+          <div class="td-desc" data-es="¿Tus hijos menores viajan al extranjero sin ti o con un tercero mayor de edad? Llena el formato oficial de autorización de salida del INM." data-en="Are your minor children traveling abroad without you or with another adult? Fill out the official INM exit authorization form.">¿Tus hijos menores viajan al extranjero sin ti o con un tercero mayor de edad? Llena el formato oficial de autorización de salida del INM.</div>
+        </div>
+      </a>
+      <a href="https://www.passportindex.org" target="_blank" rel="noopener" class="td-card">
+        <div class="td-icon">🛂</div>
+        <div>
+          <div class="td-title" data-es="Requisitos de visa por pasaporte ↗" data-en="Visa requirements by passport ↗">Requisitos de visa por pasaporte ↗</div>
+          <div class="td-desc" data-es="Verifica qué visas necesitas según tu nacionalidad y destino antes de reservar. El trámite es personal e intransferible." data-en="Check which visas you need based on your nationality and destination before booking. The application is personal and non-transferable.">Verifica qué visas necesitas según tu nacionalidad y destino antes de reservar. El trámite es personal e intransferible.</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="legal-block">
+      <p data-es-html="&lt;strong&gt;TODOS LOS PRECIOS PUBLICADOS EN ESTE SITIO WEB SON DE CARÁCTER REFERENCIAL E INFORMATIVO.&lt;/strong&gt; Ninguno de los precios que se publican son de carácter final o definitivo en tanto el cliente no solicite una cotización formal, misma que se elabora y entrega de acuerdo a sus propios intereses, requerimientos y presupuesto." data-en-html="&lt;strong&gt;ALL PRICES PUBLISHED ON THIS WEBSITE ARE REFERENTIAL AND INFORMATIONAL.&lt;/strong&gt; None of the published prices are final or definitive until the client requests a formal quote, which is prepared and delivered according to their own interests, requirements and budget."><strong>TODOS LOS PRECIOS PUBLICADOS EN ESTE SITIO WEB SON DE CARÁCTER REFERENCIAL E INFORMATIVO.</strong> Ninguno de los precios que se publican son de carácter final o definitivo en tanto el cliente no solicite una cotización formal, misma que se elabora y entrega de acuerdo a sus propios intereses, requerimientos y presupuesto.</p>
+      <p data-es="Los precios son referenciales dado que se sujetan a requerimientos específicos de cada cliente, entre otros y sin ser limitativos: clase de vuelos, categoría y disponibilidad de alojamiento, tipo de ocupación (sencilla, doble, triple), edades de los viajeros, temporada en la que se viaja, y condiciones particulares que ameriten la contratación de servicios especiales. Toda cotización se elabora en base a estas condiciones." data-en="Prices are referential as they are subject to each client's specific requirements, including but not limited to: flight class, accommodation category and availability, occupancy type (single, double, triple), traveler ages, travel season, and particular conditions requiring special services. Every quote is prepared based on these conditions.">Los precios son referenciales dado que se sujetan a requerimientos específicos de cada cliente, entre otros y sin ser limitativos: clase de vuelos, categoría y disponibilidad de alojamiento, tipo de ocupación (sencilla, doble, triple), edades de los viajeros, temporada en la que se viaja, y condiciones particulares que ameriten la contratación de servicios especiales. Toda cotización se elabora en base a estas condiciones.</p>
+      <p data-es="Los precios expresados en moneda extranjera podrán ser pagados en Pesos Mexicanos al tipo de cambio vigente en el lugar y fecha en que se realice el pago, conforme a las disposiciones del Banco de México y a lo dispuesto en el Artículo 8º de la Ley Monetaria de los Estados Unidos Mexicanos. Una vez que el cliente cuenta con su cotización formal, es nuestra responsabilidad y obligación dar cabal cumplimiento al precio y a los servicios contratados." data-en="Prices expressed in foreign currency may be paid in Mexican Pesos at the exchange rate in effect on the place and date of payment, in accordance with Banco de México provisions and Article 8 of the Monetary Law of the United Mexican States. Once the client has their formal quote, it is our responsibility and obligation to fully honor the price and contracted services.">Los precios expresados en moneda extranjera podrán ser pagados en Pesos Mexicanos al tipo de cambio vigente en el lugar y fecha en que se realice el pago, conforme a las disposiciones del Banco de México y a lo dispuesto en el Artículo 8º de la Ley Monetaria de los Estados Unidos Mexicanos. Una vez que el cliente cuenta con su cotización formal, es nuestra responsabilidad y obligación dar cabal cumplimiento al precio y a los servicios contratados.</p>
+    </div>
+  </div>
+</section>
+<section class="pricing tm-pg" id="pricing" data-pg-of="inicio precio">
   <div class="pricing-inner">
     <div class="section-label" style="justify-content: center;">
       <span class="num">11</span>
@@ -8089,22 +8163,15 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 
       <!-- TRACK: flex row, JS sets transform -->
       <div id="ncsTrack" style="display:flex;align-items:center;gap:18px;position:relative;left:0;will-change:transform;transition:transform .55s cubic-bezier(.4,0,.2,1);">
-<div class="ncs-item" data-idx="0"><img src="img/site/galeria-00-48d94c.jpg" alt="Torre Eiffel · París, Francia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Torre Eiffel · París, Francia</span></div></div>
-<div class="ncs-item" data-idx="1"><img src="img/site/galeria-01-c73721.jpg" alt="Sagrada Família · Barcelona, España" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Sagrada Família · Barcelona, España</span></div></div>
-<div class="ncs-item" data-idx="2"><img src="img/site/galeria-02-07e508.jpg" alt="Coliseo Romano · Roma, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Coliseo Romano · Roma, Italia</span></div></div>
-<div class="ncs-item" data-idx="3"><img src="img/site/galeria-03-ad87c4.jpg" alt="Ferrari Purosangue · Hotel de Paris, Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Ferrari Purosangue · Hotel de Paris, Mónaco</span></div></div>
-<div class="ncs-item" data-idx="4"><img src="img/site/galeria-04-897437.jpg" alt="G-Wagon · Casino de Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>G-Wagon · Casino de Mónaco</span></div></div>
-<div class="ncs-item" data-idx="5"><img src="img/site/galeria-05-08b24a.jpg" alt="Alpes Suizos · Suiza" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Alpes Suizos · Suiza</span></div></div>
-<div class="ncs-item" data-idx="6"><img src="img/site/galeria-06-a418b7.jpg" alt="Noche estrellada · Alpes Suizos" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Noche estrellada · Alpes Suizos</span></div></div>
-<div class="ncs-item" data-idx="7"><img src="img/site/galeria-07-fd8493.jpg" alt="Musée du Louvre · París, Francia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Musée du Louvre · París, Francia</span></div></div>
-<div class="ncs-item" data-idx="8"><img src="img/site/galeria-08-01815f.jpg" alt="F1 Red Bull · Museo del Príncipe, Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>F1 Red Bull · Museo del Príncipe, Mónaco</span></div></div>
-<div class="ncs-item" data-idx="9"><img src="img/site/galeria-09-082168.jpg" alt="Elite Champions · Milán, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Elite Champions · Milán, Italia</span></div></div>
-<div class="ncs-item" data-idx="10"><img src="img/site/galeria-10-49a950.jpg" alt="Banderas de Europa · Roma, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Banderas de Europa · Roma, Italia</span></div></div>
-<div class="ncs-item" data-idx="11"><img src="img/site/galeria-11-bd5290.jpg" alt="Piccadilly Circus · Londres, Reino Unido" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Piccadilly Circus · Londres, Reino Unido</span></div></div>
-<div class="ncs-item" data-idx="12"><img src="img/site/galeria-12-bdc505.jpg" alt="Duomo di Milano · Milán, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Duomo di Milano · Milán, Italia</span></div></div>
-<div class="ncs-item" data-idx="13"><img src="img/site/galeria-13-d676a9.jpg" alt="Río Támesis · Londres, Reino Unido" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Río Támesis · Londres, Reino Unido</span></div></div>
-<div class="ncs-item" data-idx="15"><img src="img/site/galeria-15-ef9220.jpg" alt="Valle de Lauterbrunnen · Suiza" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Valle de Lauterbrunnen · Suiza</span></div></div>
-<div class="ncs-item" data-idx="16"><img src="img/site/galeria-16-e3cce2.jpg" alt="Islas Phi Phi · Tailandia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Islas Phi Phi · Tailandia</span></div></div>
+<div class="ncs-item" data-idx="0"><img src="img/site/galeria-01-c73721.jpg" alt="Sagrada Família · Barcelona, España" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Sagrada Família · Barcelona, España</span></div></div>
+<div class="ncs-item" data-idx="1"><img src="img/site/galeria-03-ad87c4.jpg" alt="Ferrari Purosangue · Hotel de Paris, Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Ferrari Purosangue · Hotel de Paris, Mónaco</span></div></div>
+<div class="ncs-item" data-idx="2"><img src="img/site/galeria-04-897437.jpg" alt="G-Wagon · Casino de Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>G-Wagon · Casino de Mónaco</span></div></div>
+<div class="ncs-item" data-idx="3"><img src="img/site/galeria-05-08b24a.jpg" alt="Alpes Suizos · Suiza" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Alpes Suizos · Suiza</span></div></div>
+<div class="ncs-item" data-idx="4"><img src="img/site/galeria-06-a418b7.jpg" alt="Noche estrellada · Alpes Suizos" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Noche estrellada · Alpes Suizos</span></div></div>
+<div class="ncs-item" data-idx="5"><img src="img/site/galeria-07-fd8493.jpg" alt="Musée du Louvre · París, Francia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Musée du Louvre · París, Francia</span></div></div>
+<div class="ncs-item" data-idx="6"><img src="img/site/galeria-08-01815f.jpg" alt="F1 Red Bull · Museo del Príncipe, Mónaco" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>F1 Red Bull · Museo del Príncipe, Mónaco</span></div></div>
+<div class="ncs-item" data-idx="7"><img src="img/site/galeria-09-082168.jpg" alt="Elite Champions · Milán, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Elite Champions · Milán, Italia</span></div></div>
+<div class="ncs-item" data-idx="8"><img src="img/site/galeria-12-bdc505.jpg" alt="Duomo di Milano · Milán, Italia" class="ncs-img" loading="lazy"><div class="ncs-cap"><span>Duomo di Milano · Milán, Italia</span></div></div>
 
       </div>
 
@@ -8310,6 +8377,56 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
   })();
   </script>
 </section>
+<section class="manifesto tm-pg" id="manifesto" data-pg-of="nosotros">
+  <div class="manifesto-inner">
+    <div class="manifesto-heading">
+      <div class="section-label">
+        <span class="num">06</span>
+        <span data-es="Manifiesto" data-en="Manifesto">Manifiesto</span>
+      </div>
+      <h2 data-es-html='Viaje diseñado para <span class="italic">exploradores reales</span>.' data-en-html='Travel designed for <span class="italic">real explorers</span>.'>
+        Viaje diseñado para <span class="italic">exploradores reales</span>.
+      </h2>
+    </div>
+
+    <div class="manifesto-body">
+      <p data-es-html='Creemos que el mejor viaje no se vende en paquete. Se <em>diseña</em> alrededor de quién eres, qué buscas y el ritmo al que quieres moverte.' data-en-html='We believe the best trips aren&#39;t sold in packages. They&#39;re <em>designed</em> around who you are, what you&#39;re looking for, and the pace you want to move at.'>
+        Creemos que el mejor viaje no se vende en paquete. Se <em>diseña</em> alrededor de quién eres, qué buscas y el ritmo al que quieres moverte.
+      </p>
+      <p data-es-html='Los buses turísticos, las filas de guías con banderitas, los itinerarios que te arrastran por diez países en seis días, <span class="highlight">eso no es viajar. Es consumir.</span>' data-en-html='Tour buses, the guide queues with little flags, the itineraries that drag you through ten countries in six days, <span class="highlight">that&#39;s not traveling. That&#39;s consuming.</span>'>
+        Los buses turísticos, las filas de guías con banderitas, los itinerarios que te arrastran por diez países en seis días, <span class="highlight">eso no es viajar. Es consumir.</span>
+      </p>
+      <p data-es="Nosotros hacemos lo opuesto. Te escuchamos, estudiamos tu destino, y diseñamos la ruta más inteligente posible, optimizando logística, transporte, alojamiento y tiempos, para que tú te enfoques solo en vivirlo." data-en="We do the opposite. We listen to you, study your destination, and design the smartest possible route, optimizing logistics, transport, accommodation and timing, so all you have to focus on is living it.">
+        Nosotros hacemos lo opuesto. Te escuchamos, estudiamos tu destino, y diseñamos la ruta más inteligente posible, optimizando logística, transporte, alojamiento y tiempos, para que tú te enfoques solo en vivirlo.
+      </p>
+
+      <div class="manifesto-divider"></div>
+
+      <div class="contrast-grid">
+        <div class="contrast-col no">
+          <h4 data-es="Lo que NO hacemos" data-en="What we DON'T do">Lo que NO hacemos</h4>
+          <ul>
+            <li data-es="Tours grupales con 40 personas" data-en="Group tours with 40 people">Tours grupales con 40 personas</li>
+            <li data-es="Buses turísticos con guías presionando" data-en="Tour buses with rushing guides">Buses turísticos con guías presionando</li>
+            <li data-es="Itinerarios rígidos de 10 países en 7 días" data-en="Rigid 10-countries-in-7-days itineraries">Itinerarios rígidos de 10 países en 7 días</li>
+            <li data-es="Restaurantes para turistas con sobreprecio" data-en="Overpriced tourist-trap restaurants">Restaurantes para turistas con sobreprecio</li>
+            <li data-es="Paradas forzadas en tiendas de souvenirs" data-en="Forced souvenir-shop stops">Paradas forzadas en tiendas de souvenirs</li>
+          </ul>
+        </div>
+        <div class="contrast-col yes">
+          <h4 data-es="Lo que SÍ hacemos" data-en="What we DO">Lo que SÍ hacemos</h4>
+          <ul>
+            <li data-es="Rutas diseñadas para viajeros independientes" data-en="Routes designed for independent travelers">Rutas diseñadas para viajeros independientes</li>
+            <li data-es="Logística optimizada que tú controlas" data-en="Optimized logistics you control">Logística optimizada que tú controlas</li>
+            <li data-es="Recomendaciones probadas en el terreno" data-en="Ground-tested recommendations">Recomendaciones probadas en el terreno</li>
+            <li data-es="Experiencias auténticas fuera del circuito masivo" data-en="Authentic off-the-mass-circuit experiences">Experiencias auténticas fuera del circuito masivo</li>
+            <li data-es="Libertad total, tú decides cuánto tiempo" data-en="Total freedom, you decide how long">Libertad total: tú decides cuánto tiempo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="confianza" style="padding:6rem 2rem;background:var(--paper-warm);position:relative;overflow:hidden;" class="tm-pg" data-pg-of="inicio">
   
   <!-- Floating financial elements, left margin -->
@@ -8473,78 +8590,12 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 </section>
 
 <!-- ============ TRANSPARENCIA DE PRECIOS + LEGAL ============ -->
-<section class="trust-section tm-pg" id="transparencia" data-pg-of="precio">
-  <div class="trust-inner">
-    <div class="trust-label" data-es="Precio honesto" data-en="Honest pricing">Precio honesto</div>
-    <h2 class="trust-title">
-      <span data-es="El precio que ves" data-en="The price you see">El precio que ves</span><br>
-      <span class="italic" data-es="es el precio que pagas." data-en="is the price you pay.">es el precio que pagas.</span>
-    </h2>
-    <p class="trust-sub" data-es="Otras agencias anuncian un precio bajo y después te suman cientos o miles de dólares en &quot;impuestos&quot; y suplementos que nunca aparecieron en el anuncio. Nosotros no hacemos eso." data-en="Other agencies advertise a low price and then add hundreds or thousands of dollars in &quot;taxes&quot; and surcharges that never appeared in the ad. We don't do that.">Otras agencias anuncian un precio bajo y después te suman cientos o miles de dólares en "impuestos" y suplementos que nunca aparecieron en el anuncio. Nosotros no hacemos eso.</p>
 
-    <div class="trust-compare">
-      <div class="tc-card tc-them">
-        <div class="tc-head" data-es="Agencia tradicional" data-en="Traditional agency">Agencia tradicional</div>
-        <div class="tc-price"><span class="tc-strike">$1,499 USD</span> <span class="tc-addon">+ $899 IMP</span></div>
-        <div class="tc-real" data-es="Costo real: $2,398 USD, 60% más de lo anunciado" data-en="Real cost: $2,398 USD, 60% more than advertised">Costo real: $2,398 USD, 60% más de lo anunciado</div>
-        <div class="tc-line"><span class="tc-x">×</span><span data-es="Impuestos aéreos cobrados aparte" data-en="Airline taxes charged separately">Impuestos aéreos cobrados aparte</span></div>
-        <div class="tc-line"><span class="tc-x">×</span><span data-es="Suplementos por fecha de salida" data-en="Departure date surcharges">Suplementos por fecha de salida</span></div>
-        <div class="tc-line"><span class="tc-x">×</span><span data-es="Propinas obligatorias no incluidas" data-en="Mandatory tips not included">Propinas obligatorias no incluidas</span></div>
-        <div class="tc-line"><span class="tc-x">×</span><span data-es="Excursiones &quot;opcionales&quot; que son el viaje real" data-en="&quot;Optional&quot; excursions that are the actual trip">Excursiones "opcionales" que son el viaje real</span></div>
-      </div>
-      <div class="tc-card tc-us">
-        <div class="tc-head">Tutto il Mundo</div>
-        <div class="tc-price" data-es="Un solo número" data-en="One single number">Un solo número</div>
-        <div class="tc-real" data-es="Lo que cotizamos es lo que pagas" data-en="What we quote is what you pay">Lo que cotizamos es lo que pagas</div>
-        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Vuelos con impuestos ya incluidos" data-en="Flights with taxes already included">Vuelos con impuestos ya incluidos</span></div>
-        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Sin suplementos escondidos por temporada" data-en="No hidden seasonal surcharges">Sin suplementos escondidos por temporada</span></div>
-        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Sin propinas forzadas ni cargos sorpresa" data-en="No forced tips or surprise charges">Sin propinas forzadas ni cargos sorpresa</span></div>
-        <div class="tc-line"><span class="tc-check">✓</span><span data-es="Te decimos exactamente qué incluye y qué no" data-en="We tell you exactly what's included and what isn't">Te decimos exactamente qué incluye y qué no</span></div>
-      </div>
-    </div>
 
-    <div class="trust-docs">
-      <a href="https://www.inm.gob.mx/menores/publico/solicitud.html" target="_blank" rel="noopener" class="td-card">
-        <div class="td-icon">👨‍👩‍👧</div>
-        <div>
-          <div class="td-title" data-es="Menores viajando sin sus padres ↗" data-en="Minors traveling without parents ↗">Menores viajando sin sus padres ↗</div>
-          <div class="td-desc" data-es="¿Tus hijos menores viajan al extranjero sin ti o con un tercero mayor de edad? Llena el formato oficial de autorización de salida del INM." data-en="Are your minor children traveling abroad without you or with another adult? Fill out the official INM exit authorization form.">¿Tus hijos menores viajan al extranjero sin ti o con un tercero mayor de edad? Llena el formato oficial de autorización de salida del INM.</div>
-        </div>
-      </a>
-      <a href="https://www.passportindex.org" target="_blank" rel="noopener" class="td-card">
-        <div class="td-icon">🛂</div>
-        <div>
-          <div class="td-title" data-es="Requisitos de visa por pasaporte ↗" data-en="Visa requirements by passport ↗">Requisitos de visa por pasaporte ↗</div>
-          <div class="td-desc" data-es="Verifica qué visas necesitas según tu nacionalidad y destino antes de reservar. El trámite es personal e intransferible." data-en="Check which visas you need based on your nationality and destination before booking. The application is personal and non-transferable.">Verifica qué visas necesitas según tu nacionalidad y destino antes de reservar. El trámite es personal e intransferible.</div>
-        </div>
-      </a>
-    </div>
 
-    <div class="legal-block">
-      <p data-es-html="&lt;strong&gt;TODOS LOS PRECIOS PUBLICADOS EN ESTE SITIO WEB SON DE CARÁCTER REFERENCIAL E INFORMATIVO.&lt;/strong&gt; Ninguno de los precios que se publican son de carácter final o definitivo en tanto el cliente no solicite una cotización formal, misma que se elabora y entrega de acuerdo a sus propios intereses, requerimientos y presupuesto." data-en-html="&lt;strong&gt;ALL PRICES PUBLISHED ON THIS WEBSITE ARE REFERENTIAL AND INFORMATIONAL.&lt;/strong&gt; None of the published prices are final or definitive until the client requests a formal quote, which is prepared and delivered according to their own interests, requirements and budget."><strong>TODOS LOS PRECIOS PUBLICADOS EN ESTE SITIO WEB SON DE CARÁCTER REFERENCIAL E INFORMATIVO.</strong> Ninguno de los precios que se publican son de carácter final o definitivo en tanto el cliente no solicite una cotización formal, misma que se elabora y entrega de acuerdo a sus propios intereses, requerimientos y presupuesto.</p>
-      <p data-es="Los precios son referenciales dado que se sujetan a requerimientos específicos de cada cliente, entre otros y sin ser limitativos: clase de vuelos, categoría y disponibilidad de alojamiento, tipo de ocupación (sencilla, doble, triple), edades de los viajeros, temporada en la que se viaja, y condiciones particulares que ameriten la contratación de servicios especiales. Toda cotización se elabora en base a estas condiciones." data-en="Prices are referential as they are subject to each client's specific requirements, including but not limited to: flight class, accommodation category and availability, occupancy type (single, double, triple), traveler ages, travel season, and particular conditions requiring special services. Every quote is prepared based on these conditions.">Los precios son referenciales dado que se sujetan a requerimientos específicos de cada cliente, entre otros y sin ser limitativos: clase de vuelos, categoría y disponibilidad de alojamiento, tipo de ocupación (sencilla, doble, triple), edades de los viajeros, temporada en la que se viaja, y condiciones particulares que ameriten la contratación de servicios especiales. Toda cotización se elabora en base a estas condiciones.</p>
-      <p data-es="Los precios expresados en moneda extranjera podrán ser pagados en Pesos Mexicanos al tipo de cambio vigente en el lugar y fecha en que se realice el pago, conforme a las disposiciones del Banco de México y a lo dispuesto en el Artículo 8º de la Ley Monetaria de los Estados Unidos Mexicanos. Una vez que el cliente cuenta con su cotización formal, es nuestra responsabilidad y obligación dar cabal cumplimiento al precio y a los servicios contratados." data-en="Prices expressed in foreign currency may be paid in Mexican Pesos at the exchange rate in effect on the place and date of payment, in accordance with Banco de México provisions and Article 8 of the Monetary Law of the United Mexican States. Once the client has their formal quote, it is our responsibility and obligation to fully honor the price and contracted services.">Los precios expresados en moneda extranjera podrán ser pagados en Pesos Mexicanos al tipo de cambio vigente en el lugar y fecha en que se realice el pago, conforme a las disposiciones del Banco de México y a lo dispuesto en el Artículo 8º de la Ley Monetaria de los Estados Unidos Mexicanos. Una vez que el cliente cuenta con su cotización formal, es nuestra responsabilidad y obligación dar cabal cumplimiento al precio y a los servicios contratados.</p>
-    </div>
-  </div>
-</section>
-
-<section id="faq" style="padding:6rem 2rem;background:var(--paper);" class="tm-pg" data-pg-of="contacto">
-  <div style="max-width:760px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:3.5rem;">
-      <div style="font-family:JetBrains Mono,monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.3em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem;" data-es="Preguntas frecuentes" data-en="Frequently asked questions">Preguntas frecuentes</div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,2.8rem);font-weight:300;letter-spacing:-.02em;margin:0;">Todo lo que necesitas <em style="font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-es="saber" data-en="to know">saber</em></h2>
-    </div>
-    <div style="border-top:1px solid var(--line);"><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que incluye el precio de la ruta?" data-en="What does the route price include?">Que incluye el precio de la ruta?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Vuelos internacionales e internos, alojamiento estandar, traslados entre ciudades y paises, seguro basico de viaje, itinerario dia a dia y soporte via WhatsApp durante todo el viaje." data-en="International and domestic flights, standard accommodation, transfers between cities and countries, basic travel insurance, day-by-day itinerary, and WhatsApp support throughout the trip.">Vuelos internacionales e internos, alojamiento estandar, traslados entre ciudades y paises, seguro basico de viaje, itinerario dia a dia y soporte via WhatsApp durante todo el viaje.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que NO incluye?" data-en="What is NOT included?">Que NO incluye?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Comidas, transporte local dentro de cada ciudad, entradas a museos o atracciones, visa (te orientamos pero el tramite es personal), y gastos personales." data-en="Meals, local transportation within each city, museum or attraction entry fees, visa (we guide you but the process is personal), and personal expenses.">Comidas, transporte local dentro de cada ciudad, entradas a museos o atracciones, visa (te orientamos pero el tramite es personal), y gastos personales.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Puedo viajar solo sin experiencia?" data-en="Can I travel alone with no experience?">Puedo viajar solo sin experiencia?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Si. Las rutas están diseñadas para ser autoguiadas con el itinerario detallado. Soporte disponible en todo momento. No se requiere experiencia previa.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Como funciona el deposito de $3,000 MXN?" data-en="How does the $3,000 MXN deposit work?">Como funciona el deposito de $3,000 MXN?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Aparta tu lugar y se descuenta del precio total. Si reservas con fecha abierta, el deposito no vence hasta que definas tu fecha." data-en="It secures your spot and is deducted from the total price. If you book with an open date, the deposit doesn't expire until you set your date.">Aparta tu lugar y se descuenta del precio total. Si reservas con fecha abierta, el deposito no vence hasta que definas tu fecha.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Necesito visa?" data-en="Do I need a visa?">Necesito visa?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Depende de tu pasaporte y el destino. Te orientamos exactamente que necesitas y los canales oficiales. El tramite es personal." data-en="Depends on your passport and destination. We guide you on exactly what you need and the official channels. The process is personal.">Depende de tu pasaporte y el destino. Te orientamos exactamente que necesitas y los canales oficiales. El tramite es personal.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Puedo pagar a meses sin intereses?" data-en="Can I pay in interest-free installments?">Puedo pagar a meses sin intereses?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Si. Aceptamos tarjetas a 3, 6 y 12 meses sin intereses. Contáctanos por WhatsApp o el formulario para la liga de pago.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que pasa si necesito cancelar o cambiar fecha?" data-en="What if I need to cancel or change dates?">Que pasa si necesito cancelar o cambiar fecha?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Con 50+ dias: devolvemos el deposito completo. Con menos de 50 dias: el deposito cubre los gastos de gestion ya generados." data-en="With 50+ days: full deposit refund. With less than 50 days: deposit covers management costs already incurred.">Con 50+ dias: devolvemos el deposito completo. Con menos de 50 dias: el deposito cubre los gastos de gestion ya generados.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Con cuanto tiempo debo reservar?" data-en="How far in advance should I book?">Con cuanto tiempo debo reservar?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Minimo 6 a 8 semanas antes del viaje. Para temporada alta recomendamos 3 a 4 meses de anticipación.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Las rutas son en grupo o privadas?" data-en="Are the routes group or private?">Las rutas son en grupo o privadas?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Privadas para ti y tus acompañantes. Sin tours grupales ni guias que marquen el ritmo. Tu libertad total.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que diferencia hay con una agencia tradicional?" data-en="How are you different from a traditional agency?">Que diferencia hay con una agencia tradicional?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Las agencias tradicionales cobran margenes altisimos, la mayoria de tu dinero termina en comisiones, no en tu viaje. Nosotros no te forzamos a guias estrictos ni itinerarios apresurados: tu decides el ritmo. Sin intermediarios que inflen el precio entre tu y tu destino." data-en="Traditional agencies charge enormous margins, most of your money ends up in commissions, not your trip. We don't force you into strict guides or rushed itineraries: you set the pace. No middlemen inflating the price between you and your destination.">Las agencias tradicionales cobran margenes altisimos, la mayoria de tu dinero termina en comisiones, no en tu viaje. Nosotros no te forzamos a guias estrictos ni itinerarios apresurados: tu decides el ritmo. Sin intermediarios que inflen el precio entre tu y tu destino.</p></details></div>
-    <div style="text-align:center;margin-top:3rem;padding:2rem;background:var(--paper-warm);border-radius:16px;border:1px solid var(--line);">
-      <p style="font-family:Poppins,sans-serif;font-size:.9rem;color:var(--ink-soft);margin:0 0 1rem;">Tu pregunta no esta aqui?</p>
-      <a href="https://wa.me/447476685715?text=Hola%2C+tengo+una+pregunta+sobre+las+rutas" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.6rem;background:var(--grad-h);color:#0A1410;padding:.8rem 1.5rem;border-radius:999px;font-family:Poppins,sans-serif;font-size:.85rem;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.403A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg data-es="Pregunta por WhatsApp" data-en="Ask on WhatsApp">Pregunta por WhatsApp</a>
-    </div>
-  </div>
-  <style>details[open] .faq-ch{transform:rotate(180deg)}.faq-ch{transition:transform .3s ease;color:var(--teal-dark)}details summary::-webkit-details-marker{display:none}</style>
-</section>
 
 <!-- ============ CONTACTO ============ -->
-<section class="contact tm-pg" id="contacto" data-pg-of="contacto">
+<section class="contact tm-pg" id="contacto" data-pg-of="inicio contacto">
   <div class="contact-inner">
     <div>
       <div class="section-label">
@@ -8678,6 +8729,20 @@ html[data-pg="rutas"] body:not(.nav-menu-open) nav:not(.scrolled) .logo-mark, ht
 
     </form>
   </div>
+</section>
+<section id="faq" style="padding:6rem 2rem;background:var(--paper);" class="tm-pg" data-pg-of="contacto">
+  <div style="max-width:760px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:3.5rem;">
+      <div style="font-family:JetBrains Mono,monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.3em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem;" data-es="Preguntas frecuentes" data-en="Frequently asked questions">Preguntas frecuentes</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,2.8rem);font-weight:300;letter-spacing:-.02em;margin:0;">Todo lo que necesitas <em style="font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-es="saber" data-en="to know">saber</em></h2>
+    </div>
+    <div style="border-top:1px solid var(--line);"><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que incluye el precio de la ruta?" data-en="What does the route price include?">Que incluye el precio de la ruta?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Vuelos internacionales e internos, alojamiento estandar, traslados entre ciudades y paises, seguro basico de viaje, itinerario dia a dia y soporte via WhatsApp durante todo el viaje." data-en="International and domestic flights, standard accommodation, transfers between cities and countries, basic travel insurance, day-by-day itinerary, and WhatsApp support throughout the trip.">Vuelos internacionales e internos, alojamiento estandar, traslados entre ciudades y paises, seguro basico de viaje, itinerario dia a dia y soporte via WhatsApp durante todo el viaje.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que NO incluye?" data-en="What is NOT included?">Que NO incluye?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Comidas, transporte local dentro de cada ciudad, entradas a museos o atracciones, visa (te orientamos pero el tramite es personal), y gastos personales." data-en="Meals, local transportation within each city, museum or attraction entry fees, visa (we guide you but the process is personal), and personal expenses.">Comidas, transporte local dentro de cada ciudad, entradas a museos o atracciones, visa (te orientamos pero el tramite es personal), y gastos personales.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Puedo viajar solo sin experiencia?" data-en="Can I travel alone with no experience?">Puedo viajar solo sin experiencia?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Si. Las rutas están diseñadas para ser autoguiadas con el itinerario detallado. Soporte disponible en todo momento. No se requiere experiencia previa.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Como funciona el deposito de $3,000 MXN?" data-en="How does the $3,000 MXN deposit work?">Como funciona el deposito de $3,000 MXN?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Aparta tu lugar y se descuenta del precio total. Si reservas con fecha abierta, el deposito no vence hasta que definas tu fecha." data-en="It secures your spot and is deducted from the total price. If you book with an open date, the deposit doesn't expire until you set your date.">Aparta tu lugar y se descuenta del precio total. Si reservas con fecha abierta, el deposito no vence hasta que definas tu fecha.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Necesito visa?" data-en="Do I need a visa?">Necesito visa?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Depende de tu pasaporte y el destino. Te orientamos exactamente que necesitas y los canales oficiales. El tramite es personal." data-en="Depends on your passport and destination. We guide you on exactly what you need and the official channels. The process is personal.">Depende de tu pasaporte y el destino. Te orientamos exactamente que necesitas y los canales oficiales. El tramite es personal.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Puedo pagar a meses sin intereses?" data-en="Can I pay in interest-free installments?">Puedo pagar a meses sin intereses?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Si. Aceptamos tarjetas a 3, 6 y 12 meses sin intereses. Contáctanos por WhatsApp o el formulario para la liga de pago.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que pasa si necesito cancelar o cambiar fecha?" data-en="What if I need to cancel or change dates?">Que pasa si necesito cancelar o cambiar fecha?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Con 50+ dias: devolvemos el deposito completo. Con menos de 50 dias: el deposito cubre los gastos de gestion ya generados." data-en="With 50+ days: full deposit refund. With less than 50 days: deposit covers management costs already incurred.">Con 50+ dias: devolvemos el deposito completo. Con menos de 50 dias: el deposito cubre los gastos de gestion ya generados.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Con cuanto tiempo debo reservar?" data-en="How far in advance should I book?">Con cuanto tiempo debo reservar?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Minimo 6 a 8 semanas antes del viaje. Para temporada alta recomendamos 3 a 4 meses de anticipación.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Las rutas son en grupo o privadas?" data-en="Are the routes group or private?">Las rutas son en grupo o privadas?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;">Privadas para ti y tus acompañantes. Sin tours grupales ni guias que marquen el ritmo. Tu libertad total.</p></details><details style="border-bottom:1px solid var(--line);"><summary style="padding:1.4rem 0;cursor:pointer;font-family:Poppins,sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;"><span data-es="Que diferencia hay con una agencia tradicional?" data-en="How are you different from a traditional agency?">Que diferencia hay con una agencia tradicional?</span><svg class="faq-ch" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p style="padding:0 0 1.4rem;margin:0;font-family:Poppins,sans-serif;font-size:.88rem;color:var(--ink-soft);line-height:1.75;" data-es="Las agencias tradicionales cobran margenes altisimos, la mayoria de tu dinero termina en comisiones, no en tu viaje. Nosotros no te forzamos a guias estrictos ni itinerarios apresurados: tu decides el ritmo. Sin intermediarios que inflen el precio entre tu y tu destino." data-en="Traditional agencies charge enormous margins, most of your money ends up in commissions, not your trip. We don't force you into strict guides or rushed itineraries: you set the pace. No middlemen inflating the price between you and your destination.">Las agencias tradicionales cobran margenes altisimos, la mayoria de tu dinero termina en comisiones, no en tu viaje. Nosotros no te forzamos a guias estrictos ni itinerarios apresurados: tu decides el ritmo. Sin intermediarios que inflen el precio entre tu y tu destino.</p></details></div>
+    <div style="text-align:center;margin-top:3rem;padding:2rem;background:var(--paper-warm);border-radius:16px;border:1px solid var(--line);">
+      <p style="font-family:Poppins,sans-serif;font-size:.9rem;color:var(--ink-soft);margin:0 0 1rem;">Tu pregunta no esta aqui?</p>
+      <a href="https://wa.me/447476685715?text=Hola%2C+tengo+una+pregunta+sobre+las+rutas" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.6rem;background:var(--grad-h);color:#0A1410;padding:.8rem 1.5rem;border-radius:999px;font-family:Poppins,sans-serif;font-size:.85rem;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.403A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg data-es="Pregunta por WhatsApp" data-en="Ask on WhatsApp">Pregunta por WhatsApp</a>
+    </div>
+  </div>
+  <style>details[open] .faq-ch{transform:rotate(180deg)}.faq-ch{transition:transform .3s ease;color:var(--teal-dark)}details summary::-webkit-details-marker{display:none}</style>
 </section>
 
 <!-- ============ WHATSAPP FLOAT ============ -->
@@ -9261,7 +9326,7 @@ origFilterBtns.forEach(btn => {
   }
 
   const wrap = document.getElementById('globeContainer');
-  const size = wrap ? wrap.clientWidth : 500;
+  const size = (wrap && wrap.clientWidth) || 500;
 
   // ── Route arcs data ────────────────────────────────────────────────────
   const ROUTE_ARCS = {
@@ -9516,6 +9581,7 @@ origFilterBtns.forEach(btn => {
     new IntersectionObserver(es => es.forEach(e => {
       glbVisible = e.isIntersecting;
       globe.controls().autoRotate = glbVisible && !activeRegion;
+      try { if (glbVisible) globe.resumeAnimation(); else globe.pauseAnimation(); } catch (e) {}
       if (glbVisible && !glbRaf) glbRaf = requestAnimationFrame(updLabels);
     }), { threshold: 0.05 }).observe(container);
   } else { glbVisible = true; requestAnimationFrame(updLabels); }
@@ -9527,6 +9593,7 @@ origFilterBtns.forEach(btn => {
   // ── Responsive resize ───────────────────────────────────────────────────
   function handleResize() {
     const s = wrap ? wrap.clientWidth : 500;
+    if (!s) return;
     globe.width(s).height(s);
   }
   window.addEventListener('resize', handleResize);
@@ -14747,7 +14814,9 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
 // ========= v64: multipágina (cada sección es su propia página, como Ripped) =========
 (function(){
   var PAGES = window.TM_PAGE_MAP;
-  var SEC2PG = {}; Object.keys(PAGES).forEach(function(p){ PAGES[p].forEach(function(s){ SEC2PG[s] = p; }); });
+  var SEC2PG = {}; Object.keys(PAGES).forEach(function(p){ PAGES[p].forEach(function(s){ if (!SEC2PG[s] || SEC2PG[s] === 'inicio') SEC2PG[s] = p; }); });
+  var pagesOf = function(el){ return (el.getAttribute('data-pg-of') || '').split(/\s+/).filter(Boolean); };
+  var pick = function(list){ return list.indexOf(current) > -1 ? current : (list.filter(function(p){ return p !== 'inicio'; })[0] || list[0]); };
   var TITLES = {
     inicio: ['Tutto il Mundo | Rutas de viaje para exploradores independientes', 'Tutto il Mundo | Travel routes for independent explorers'],
     rutas: ['Rutas · Tutto il Mundo', 'Routes · Tutto il Mundo'], designer: ['Diseña tu ruta · Tutto il Mundo', 'Design your route · Tutto il Mundo'],
@@ -14878,10 +14947,10 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
     var h = (hash || '').replace(/^#/, '');
     if (!h || h === 'top') return { page: 'inicio' };
     if (/^ruta-/.test(h)) return { page: 'ruta', slug: h.slice(5) };
-    if (SEC2PG[h]) return { page: SEC2PG[h], target: h };
     if (PAGES[h]) return { page: h };
+    if (SEC2PG[h]) { var se = document.getElementById(h); return { page: se && se.classList.contains('tm-pg') ? pick(pagesOf(se)) : SEC2PG[h], target: h }; }
     var el = document.getElementById(h); var sec = el && el.closest('.tm-pg');
-    if (sec) { var pg = sec.getAttribute('data-pg-of'); return { page: pg, target: h }; }
+    if (sec) { return { page: pick(pagesOf(sec)), target: h }; }
     return null;
   }
   function show(r, opts){
@@ -14894,7 +14963,11 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
     });
     var tt = TITLES[r.page]; if (tt) document.title = EN() ? tt[1] : tt[0];
     if (changed) {
-      document.querySelectorAll('.tm-pg[data-pg-of="' + r.page + '"]').forEach(function(s){ s.classList.remove('tm-enter'); void s.offsetWidth; s.classList.add('tm-enter'); });
+      var n = 0;
+      document.querySelectorAll('.tm-pg[data-pg-of~="' + r.page + '"]').forEach(function(s){
+        s.classList.remove('tm-enter'); void s.offsetWidth; s.classList.add('tm-enter');
+        var num = s.querySelector('.section-label .num'); if (num && /^\d+$/.test(num.textContent.trim())) num.textContent = String(++n).padStart(2, '0');
+      });
       window.dispatchEvent(new Event('resize'));
       setTimeout(function(){ window.dispatchEvent(new Event('resize')); }, 120);
       if (r.page === 'rutas') setTimeout(function(){ var b = document.querySelector('#rutas .tmc-btn'); if (b && !b.hidden && b.getAttribute('aria-expanded') === 'false') b.click(); }, 160);
@@ -14906,7 +14979,7 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
       if (r.page === 'inicio') drawIn(document.getElementById('destacadas'));
     }
     if (opts.noScroll) return;
-    var first = document.querySelector('.tm-pg[data-pg-of="' + r.page + '"]');
+    var first = document.querySelector('.tm-pg[data-pg-of~="' + r.page + '"]:not(.tm-phero)');
     if (r.target && first && first.id === r.target) r.target = null;
     if (r.target) {
       var el = document.getElementById(r.target);
@@ -14930,8 +15003,8 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
   Element.prototype.scrollIntoView = function(){
     var sec = this.closest && this.closest('.tm-pg');
     if (sec) {
-      var pg = sec.getAttribute('data-pg-of');
-      if (pg && pg !== current) {
+      var pl = pagesOf(sec), pg = pick(pl);
+      if (pg && pl.indexOf(current) < 0) {
         var id = sec.id || pg;
         history.replaceState(null, '', '#' + (this.id && document.getElementById(this.id) === this ? this.id : id));
         show({ page: pg }, { noScroll: true });
