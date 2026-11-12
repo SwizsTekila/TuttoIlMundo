@@ -13,7 +13,7 @@
 <script>
 /* v64 multipágina: cada sección vive en su página. TM_PAGES=false regresa a una sola página con modales. */
 window.TM_PAGES = true;
-window.TM_PAGE_MAP = {"inicio":["inicio","hx-strip","destacadas","globo","designer","como-funciona","pricing","confianza","contacto"],"rutas":["ph-rutas","rutas","globo"],"ruta":["ruta"],"designer":["ph-designer","designer","proceso"],"temporadas":["ph-temporadas","temporadas","pasaporte"],"experiencias":["ph-experiencias","paises","escalera","experiencias","fighter"],"nosotros":["ph-nosotros","nosotros","manifesto","historia","galeria"],"precio":["ph-precio","transparencia","pricing","reserva"],"contacto":["ph-contacto","contacto","faq"]};
+window.TM_PAGE_MAP = {"inicio":["inicio","hx-strip","destacadas","globo","designer","como-funciona","pricing","confianza","contacto"],"rutas":["ph-rutas","rutas","globo","tm-outro"],"ruta":["ruta"],"designer":["ph-designer","designer","proceso","ideas","recibes","tm-outro"],"temporadas":["ph-temporadas","temporadas","pasaporte","checklist","tm-outro"],"experiencias":["ph-experiencias","paises","escalera","experiencias","fighter","tm-outro"],"nosotros":["ph-nosotros","nosotros","manifesto","historia","galeria","tm-outro"],"precio":["ph-precio","transparencia","pricing","reserva","pagos","tm-outro"],"contacto":["ph-contacto","contacto","faq","despues","tm-outro"]};
 (function(){var h=(location.hash||'').slice(1),m=window.TM_PAGE_MAP,p='inicio';
 if(/^ruta-/.test(h))p='ruta';else if(m[h])p=h;else for(var k in m){if(k!=='inicio'&&m[k].indexOf(h)>-1){p=k;break;}}
 document.documentElement.setAttribute('data-pg',p);})();
@@ -5568,6 +5568,67 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
   .rp-reveal { opacity: 1; transform: none; transition: none; }
 }
 
+
+/* ===== v66: secciones extra ===== */
+.tmx { padding: 7rem 3rem; background: var(--paper); }
+.tmx-alt { background: #F3F1EA; }
+.tmx-in { max-width: 1240px; margin: 0 auto; }
+.tmx-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 3rem; }
+.tmx-head h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.04em; line-height: 1; font-size: clamp(2.2rem, 4.6vw, 3.6rem); margin-top: 1rem; }
+.tmx-head h2 .italic { font-style: normal; background: var(--grad-h); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tmx-sub { max-width: 38ch; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.tmx-grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.tmx-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.tmx-card, .tmx-pack, .tmx-idea, .tmx-step { position: relative; background: #fff; border: 1px solid rgba(10,20,16,.07); border-radius: 24px; padding: 1.6rem; box-shadow: 0 1px 0 #fff inset, 0 24px 40px -34px rgba(10,20,16,.35); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+.tmx-card:hover, .tmx-pack:hover, .tmx-idea:hover, .tmx-step:hover { transform: translateY(-4px); box-shadow: 0 1px 0 #fff inset, 0 30px 50px -30px rgba(10,20,16,.4); }
+.tmx-ic { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(140deg, rgba(142,242,182,.35), rgba(46,223,210,.3)); color: var(--teal-darker); margin-bottom: 1.1rem; }
+.tmx-ic svg { width: 22px; height: 22px; }
+.tmx h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.12rem; letter-spacing: -.02em; margin-bottom: .45rem; }
+.tmx-card p, .tmx-idea p, .tmx-step p { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+.tmx-sub2 { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin: 3.5rem 0 1.2rem; }
+.tmx-sub2 h3 { font-size: 1.5rem; letter-spacing: -.03em; }
+.tmx-sub2 p { color: var(--muted); font-size: .85rem; }
+.tmx-pack-h { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+.tmx-pack-h .mono { font-size: .66rem; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
+.tmx-pack ul { list-style: none; padding: 0; margin: .8rem 0 0; }
+.tmx-pack li { position: relative; padding: .55rem 0 .55rem 1.6rem; border-top: 1px solid rgba(10,20,16,.07); font-size: .92rem; }
+.tmx-pack li::before { content: ''; position: absolute; left: 0; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: var(--grad-h); }
+.tmx-idea { display: flex; flex-direction: column; gap: .2rem; color: var(--ink); text-decoration: none; min-height: 210px; }
+.tmx-idea > div { flex: 1; }
+.tmx-go { font-family: var(--font-display); font-weight: 600; font-size: .85rem; color: var(--teal-dark); margin-top: 1rem; }
+.tmx-idea:hover .tmx-go { color: var(--ink); }
+.tmx-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; counter-reset: s; }
+.tmx-steps4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tmx-n { position: absolute; top: 1.4rem; right: 1.5rem; font-size: .75rem; letter-spacing: .14em; color: var(--teal-dark); }
+.tmx-steps .tmx-step:not(:has(.tmx-ic)) h3 { margin-top: 2.2rem; }
+.tmx-pays { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.6rem; }
+.tmx-pay { display: inline-flex; align-items: center; gap: .7rem; padding: .5rem 1.1rem .5rem .5rem; border-radius: 99px; background: #fff; border: 1px solid rgba(10,20,16,.07); font-weight: 500; font-size: .92rem; }
+.tmx-pay .tmx-ic { width: 36px; height: 36px; border-radius: 50%; margin: 0; }
+.tmx-pay .tmx-ic svg { width: 18px; height: 18px; }
+.tmx-cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+/* cierre de página */
+.tm-outro { padding: 6rem 3rem 7rem; background: var(--paper); }
+.tm-outro-in { max-width: 1240px; margin: 0 auto; }
+.tm-next { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 4rem; padding: 2.4rem 2.8rem; border-radius: 30px; color: #fff; text-decoration: none; background: radial-gradient(70% 120% at 100% 0%, rgba(46,223,210,.35), transparent 60%), radial-gradient(60% 100% at 0% 100%, rgba(91,108,217,.3), transparent 60%), #0A1410; box-shadow: 0 40px 80px -40px rgba(10,20,16,.6); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.tm-next:hover { transform: translateY(-4px); }
+.tm-next .mono { font-size: .7rem; letter-spacing: .22em; color: var(--tm-bright); }
+.tm-next h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.04em; font-size: clamp(1.8rem, 3.6vw, 2.8rem); margin: .4rem 0; }
+.tm-next p { color: rgba(255,255,255,.7); max-width: 50ch; }
+.tm-next-arrow { flex: none; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #8EF2B6, #2EDFD2 45%, #11BDB8); color: #06231E; font-size: 1.6rem; transition: transform .3s; }
+.tm-next:hover .tm-next-arrow { transform: translateX(6px); }
+@media (max-width: 1024px) { .tmx-grid4, .tmx-steps4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tmx-grid3, .tmx-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .tmx, .tm-outro { padding: 4.5rem 1.25rem; }
+  .tmx-head { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
+  .tmx-grid4, .tmx-grid3, .tmx-steps, .tmx-steps4 { grid-template-columns: 1fr; }
+  .tmx-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+  .tmx-grid4 .tmx-card { padding: 1.1rem; border-radius: 18px; }
+  .tmx-grid4 .tmx-card p { font-size: .8rem; }
+  .tmx-sub2 { flex-direction: column; }
+  .tm-next { padding: 1.8rem 1.5rem; border-radius: 24px; }
+  .tm-next-arrow { width: 52px; height: 52px; }
+}
+
 </style>
 </head>
 <body>
@@ -7042,6 +7103,22 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
     </div>
   </div>
 </section>
+<section class="tmx tm-pg" id="ideas" data-pg-of="designer"><div class="tmx-in">
+  <div class="tmx-head"><div><div class="section-label"><span class="num">03</span><span data-es="Ideas para empezar" data-en="Ideas to start">Ideas para empezar</span></div>
+    <h2 data-es-html='¿No sabes cómo <span class="italic">pedirlo?</span>' data-en-html='Not sure how to <span class="italic">ask?</span>'>¿No sabes cómo <span class="italic">pedirlo?</span></h2></div><p class="tmx-sub" data-es="Toca una idea y nos llega por WhatsApp. Desde ahí la afinamos contigo." data-en="Tap an idea and it reaches us on WhatsApp. We fine-tune it with you from there.">Toca una idea y nos llega por WhatsApp. Desde ahí la afinamos contigo.</p></div>
+  <div class="tmx-grid3"><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20mi%20primer%20viaje%20a%20Europa%2C%203%20semanas%2C%20unos%20%2470%20al%20d%C3%ADa" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15.5v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8.5l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5z"/></svg></span><div><h3><span data-es="Mi primer viaje a Europa" data-en="My first trip to Europe">Mi primer viaje a Europa</span></h3><p data-es="3 semanas · unos $70 al día" data-en="3 weeks · about $70 a day">3 semanas · unos $70 al día</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20Italia%20y%20Grecia%20con%20playa%2C%2015%20d%C3%ADas%20en%20verano" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><div><h3><span data-es="Italia y Grecia con playa" data-en="Italy and Greece with beaches">Italia y Grecia con playa</span></h3><p data-es="15 días · verano" data-en="15 days · summer">15 días · verano</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20ver%20auroras%20en%20Islandia%20y%20Noruega%2C%2010%20a%2014%20d%C3%ADas" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg></span><div><h3><span data-es="Auroras en Islandia y Noruega" data-en="Northern lights in Iceland and Norway">Auroras en Islandia y Noruega</span></h3><p data-es="Invierno · 10 a 14 días" data-en="Winter · 10 to 14 days">Invierno · 10 a 14 días</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20Jap%C3%B3n%20y%20Corea%20en%20primavera%2C%202%20a%203%20semanas" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></span><div><h3><span data-es="Japón y Corea en primavera" data-en="Japan and Korea in spring">Japón y Corea en primavera</span></h3><p data-es="Cerezos · 2 a 3 semanas" data-en="Cherry blossoms · 2 to 3 weeks">Cerezos · 2 a 3 semanas</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20Patagonia%20y%20Buenos%20Aires%2C%202%20semanas" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><div><h3><span data-es="Patagonia y Buenos Aires" data-en="Patagonia and Buenos Aires">Patagonia y Buenos Aires</span></h3><p data-es="2 semanas · naturaleza y ciudad" data-en="2 weeks · nature and city">2 semanas · naturaleza y ciudad</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a><a class="tmx-idea" href="https://wa.me/447476685715?text=Hola%2C%20queremos%20una%20luna%20de%20miel%20en%20el%20Mediterr%C3%A1neo" target="_blank" rel="noopener"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><div><h3><span data-es="Luna de miel en el Mediterráneo" data-en="Mediterranean honeymoon">Luna de miel en el Mediterráneo</span></h3><p data-es="Para dos · a su ritmo" data-en="For two · at your pace">Para dos · a su ritmo</p></div>
+      <span class="tmx-go"><span data-es="Pídelo así" data-en="Ask like this">Pídelo así</span> →</span></a></div>
+</div></section>
+<section class="tmx tmx-alt tm-pg" id="recibes" data-pg-of="designer"><div class="tmx-in">
+  <div class="tmx-head"><div><div class="section-label"><span class="num">04</span><span data-es="Lo que recibes" data-en="What you get">Lo que recibes</span></div>
+    <h2 data-es-html='Tu ruta, <span class="italic">lista para vivirla.</span>' data-en-html='Your route, <span class="italic">ready to live.</span>'>Tu ruta, <span class="italic">lista para vivirla.</span></h2></div><p class="tmx-sub" data-es="No es un PDF genérico. Es tu viaje armado pieza por pieza." data-en="Not a generic PDF. It is your trip built piece by piece.">No es un PDF genérico. Es tu viaje armado pieza por pieza.</p></div>
+  <div class="tmx-grid3"><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg></span><h3><span data-es="Itinerario día por día" data-en="Day by day itinerary">Itinerario día por día</span></h3><p data-es="Cómo llegar, dónde dormir, qué hacer, dónde comer y un tip local en cada parada." data-en="How to get there, where to sleep, what to do, where to eat and a local tip at every stop.">Cómo llegar, dónde dormir, qué hacer, dónde comer y un tip local en cada parada.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><h3><span data-es="El mapa de tu ruta" data-en="Your route map">El mapa de tu ruta</span></h3><p data-es="Parada por parada, con trenes, buses y vuelos entre ciudades." data-en="Stop by stop, with trains, buses and flights between cities.">Parada por parada, con trenes, buses y vuelos entre ciudades.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><h3><span data-es="Precio cerrado" data-en="Locked price">Precio cerrado</span></h3><p data-es="Sabes el total antes de apartar. Sin sorpresas después." data-en="You know the total before reserving. No surprises later.">Sabes el total antes de apartar. Sin sorpresas después.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15.5v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8.5l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5z"/></svg></span><h3><span data-es="Vuelos, hospedaje y traslados" data-en="Flights, stays and transfers">Vuelos, hospedaje y traslados</span></h3><p data-es="Coordinados para que no pierdas tiempo armando piezas." data-en="Coordinated so you do not waste time putting pieces together.">Coordinados para que no pierdas tiempo armando piezas.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></span><h3><span data-es="Apps y tips de local" data-en="Apps and local tips">Apps y tips de local</span></h3><p data-es="Las apps que sí sirven y cómo moverte sin pagar de más." data-en="The apps that actually work and how to move around without overpaying.">Las apps que sí sirven y cómo moverte sin pagar de más.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><h3><span data-es="Acompañamiento por WhatsApp" data-en="WhatsApp support">Acompañamiento por WhatsApp</span></h3><p data-es="Si algo cambia en el camino, nos escribes y lo resolvemos." data-en="If something changes on the road, message us and we solve it.">Si algo cambia en el camino, nos escribes y lo resolvemos.</p></div></div>
+</div></section>
 
 <!-- ============ MANIFIESTO ============ -->
 
@@ -7293,6 +7370,16 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
     </div>
   </div>
 </section>
+<section class="tmx tm-pg" id="checklist" data-pg-of="temporadas"><div class="tmx-in">
+  <div class="tmx-head"><div><div class="section-label"><span class="num">03</span><span data-es="Antes de viajar" data-en="Before you go">Antes de viajar</span></div>
+    <h2 data-es-html='Tu checklist <span class="italic">de salida.</span>' data-en-html='Your departure <span class="italic">checklist.</span>'>Tu checklist <span class="italic">de salida.</span></h2></div><p class="tmx-sub" data-es="Lo que revisamos con cada viajero antes de que despegue. Guárdalo." data-en="What we check with every traveler before takeoff. Save it.">Lo que revisamos con cada viajero antes de que despegue. Guárdalo.</p></div>
+  <div class="tmx-grid4"><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="11" r="3"/><path d="M8 17h8"/></svg></span><h3><span data-es="Pasaporte vigente" data-en="Valid passport">Pasaporte vigente</span></h3><p data-es="Que no venza en los 6 meses después de tu regreso." data-en="It should not expire within 6 months after you return.">Que no venza en los 6 meses después de tu regreso.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3><span data-es="Seguro de viaje" data-en="Travel insurance">Seguro de viaje</span></h3><p data-es="Con cobertura médica. Un hospital en Europa sin seguro sale carísimo." data-en="With medical coverage. A hospital abroad without it is very expensive.">Con cobertura médica. Un hospital en Europa sin seguro sale carísimo.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><rect x="9.5" y="11" width="6" height="6" rx="1"/></svg></span><h3><span data-es="eSIM antes de salir" data-en="eSIM before leaving">eSIM antes de salir</span></h3><p data-es="Llegas y ya tienes datos, sin buscar chip en el aeropuerto." data-en="You land already connected, no SIM hunting at the airport.">Llegas y ya tienes datos, sin buscar chip en el aeropuerto.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></span><h3><span data-es="Tarjeta sin comisiones" data-en="No-fee card">Tarjeta sin comisiones</span></h3><p data-es="Sin cargo por compras en el extranjero. Lleva una de respaldo." data-en="No foreign transaction fees. Bring a backup one.">Sin cargo por compras en el extranjero. Lleva una de respaldo.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v1.5M12 16v1.5"/></svg></span><h3><span data-es="Paga en moneda local" data-en="Pay in local currency">Paga en moneda local</span></h3><p data-es="Si la terminal te ofrece cobrar en pesos, di que no. Te cobran de más." data-en="If the terminal offers to charge in pesos, say no. It costs you more.">Si la terminal te ofrece cobrar en pesos, di que no. Te cobran de más.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h2"/></svg></span><h3><span data-es="Copias digitales" data-en="Digital copies">Copias digitales</span></h3><p data-es="Pasaporte, seguro y reservas en tu correo y en la nube." data-en="Passport, insurance and bookings in your email and cloud.">Pasaporte, seguro y reservas en tu correo y en la nube.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><h3><span data-es="Apps instaladas" data-en="Apps installed">Apps instaladas</span></h3><p data-es="Bolt o Uber, mapas offline y la app de tu aerolínea." data-en="Bolt or Uber, offline maps and your airline app.">Bolt o Uber, mapas offline y la app de tu aerolínea.</p></div><div class="tmx-card"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span><h3><span data-es="Avisa a tu banco" data-en="Tell your bank">Avisa a tu banco</span></h3><p data-es="Que sepa que vas a viajar para que no te bloquee la tarjeta." data-en="So it does not block your card abroad.">Que sepa que vas a viajar para que no te bloquee la tarjeta.</p></div></div>
+  <div class="tmx-sub2"><h3 data-es="Qué llevar según la temporada" data-en="What to pack by season">Qué llevar según la temporada</h3><p data-es="Hemisferio norte. Para Sudamérica las estaciones van al revés." data-en="Northern hemisphere. In South America the seasons are reversed.">Hemisferio norte. Para Sudamérica las estaciones van al revés.</p></div>
+  <div class="tmx-grid3"><div class="tmx-pack"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg></span><div class="tmx-pack-h"><h3><span data-es="Invierno" data-en="Winter">Invierno</span></h3><span class="mono" data-es="Dic a feb" data-en="Dec to Feb">Dic a feb</span></div>
+      <ul><li><span data-es="Capas térmicas" data-en="Thermal layers">Capas térmicas</span></li><li><span data-es="Abrigo impermeable" data-en="Waterproof coat">Abrigo impermeable</span></li><li><span data-es="Botas con buen agarre" data-en="Boots with good grip">Botas con buen agarre</span></li><li><span data-es="Gorro y guantes" data-en="Hat and gloves">Gorro y guantes</span></li></ul></div><div class="tmx-pack"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></span><div class="tmx-pack-h"><h3><span data-es="Primavera y otoño" data-en="Spring and fall">Primavera y otoño</span></h3><span class="mono" data-es="Mar a may · sep a nov" data-en="Mar to May · Sep to Nov">Mar a may · sep a nov</span></div>
+      <ul><li><span data-es="Capas ligeras" data-en="Light layers">Capas ligeras</span></li><li><span data-es="Chamarra rompevientos" data-en="Windbreaker">Chamarra rompevientos</span></li><li><span data-es="Paraguas compacto" data-en="Compact umbrella">Paraguas compacto</span></li><li><span data-es="Tenis para caminar todo el día" data-en="Sneakers for all-day walking">Tenis para caminar todo el día</span></li></ul></div><div class="tmx-pack"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><div class="tmx-pack-h"><h3><span data-es="Verano" data-en="Summer">Verano</span></h3><span class="mono" data-es="Jun a ago" data-en="Jun to Aug">Jun a ago</span></div>
+      <ul><li><span data-es="Ropa ligera" data-en="Light clothes">Ropa ligera</span></li><li><span data-es="Protector solar" data-en="Sunscreen">Protector solar</span></li><li><span data-es="Botella reutilizable" data-en="Reusable bottle">Botella reutilizable</span></li><li><span data-es="Reserva con tiempo: es temporada alta" data-en="Book early: it is high season">Reserva con tiempo: es temporada alta</span></li></ul></div></div>
+</div></section>
 
 
 <!-- ============ SINGLE COUNTRY ============ -->
@@ -8588,6 +8675,12 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
     </p>
   </div>
 </section>
+<section class="tmx tmx-alt tm-pg" id="pagos" data-pg-of="precio"><div class="tmx-in">
+  <div class="tmx-head"><div><div class="section-label"><span class="num">04</span><span data-es="Cómo pagas" data-en="How you pay">Cómo pagas</span></div>
+    <h2 data-es-html='Pagar también <span class="italic">es fácil.</span>' data-en-html='Paying is <span class="italic">easy too.</span>'>Pagar también <span class="italic">es fácil.</span></h2></div><p class="tmx-sub" data-es="Pagos procesados por Stripe, la misma plataforma que usan las grandes marcas." data-en="Payments processed by Stripe, the same platform big brands use.">Pagos procesados por Stripe, la misma plataforma que usan las grandes marcas.</p></div>
+  <div class="tmx-steps"><div class="tmx-step"><span class="tmx-n mono">01</span><h3><span data-es="Apartas tu lugar" data-en="Reserve your spot">Apartas tu lugar</span></h3><p data-es="Con $3,000 MXN. Se descuenta del total de tu viaje." data-en="With MX$3,000. It is deducted from your trip total.">Con $3,000 MXN. Se descuenta del total de tu viaje.</p></div><div class="tmx-step"><span class="tmx-n mono">02</span><h3><span data-es="Afinamos tu ruta" data-en="We fine-tune your route">Afinamos tu ruta</span></h3><p data-es="Fechas, ciudades y hospedaje, contigo, hasta que quede como la quieres." data-en="Dates, cities and stays, with you, until it is exactly what you want.">Fechas, ciudades y hospedaje, contigo, hasta que quede como la quieres.</p></div><div class="tmx-step"><span class="tmx-n mono">03</span><h3><span data-es="Pagas el resto" data-en="You pay the rest">Pagas el resto</span></h3><p data-es="Con tarjeta, meses sin intereses u OXXO. Tú eliges." data-en="With card, interest-free months or OXXO. Your choice.">Con tarjeta, meses sin intereses u OXXO. Tú eliges.</p></div></div>
+  <div class="tmx-pays"><div class="tmx-pay"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></span><span data-es="Tarjeta de crédito o débito" data-en="Credit or debit card">Tarjeta de crédito o débito</span></div><div class="tmx-pay"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span data-es="Meses sin intereses" data-en="Interest-free months">Meses sin intereses</span></div><div class="tmx-pay"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v1.5M12 16v1.5"/></svg></span><span data-es="Efectivo en OXXO" data-en="Cash at OXXO">Efectivo en OXXO</span></div><div class="tmx-pay"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><span data-es="Apple Pay y Google Pay" data-en="Apple Pay and Google Pay">Apple Pay y Google Pay</span></div></div>
+</div></section>
 
 <!-- ============ TRANSPARENCIA DE PRECIOS + LEGAL ============ -->
 
@@ -8744,6 +8837,13 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
   </div>
   <style>details[open] .faq-ch{transform:rotate(180deg)}.faq-ch{transition:transform .3s ease;color:var(--teal-dark)}details summary::-webkit-details-marker{display:none}</style>
 </section>
+<section class="tmx tm-pg" id="despues" data-pg-of="contacto"><div class="tmx-in">
+  <div class="tmx-head"><div><div class="section-label"><span class="num">03</span><span data-es="Después de escribirnos" data-en="After you write">Después de escribirnos</span></div>
+    <h2 data-es-html='¿Qué pasa <span class="italic">después?</span>' data-en-html='What happens <span class="italic">next?</span>'>¿Qué pasa <span class="italic">después?</span></h2></div><p class="tmx-sub" data-es="Sin formularios eternos ni vendedores insistentes. Así funciona." data-en="No endless forms, no pushy sellers. This is how it works.">Sin formularios eternos ni vendedores insistentes. Así funciona.</p></div>
+  <div class="tmx-steps tmx-steps4"><div class="tmx-step"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tmx-n mono">01</span><h3><span data-es="Te respondemos" data-en="We reply">Te respondemos</span></h3><p data-es="En menos de 24 horas, por WhatsApp o correo." data-en="Within 24 hours, by WhatsApp or email.">En menos de 24 horas, por WhatsApp o correo.</p></div><div class="tmx-step"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tmx-n mono">02</span><h3><span data-es="Platicamos tu viaje" data-en="We talk about your trip">Platicamos tu viaje</span></h3><p data-es="Qué quieres vivir, cuántos días, con quién y con qué presupuesto." data-en="What you want to live, how many days, with whom and on what budget.">Qué quieres vivir, cuántos días, con quién y con qué presupuesto.</p></div><div class="tmx-step"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="tmx-n mono">03</span><h3><span data-es="Te mandamos tu ruta" data-en="We send your route">Te mandamos tu ruta</span></h3><p data-es="Con mapa, itinerario y precio cerrado. La ajustamos las veces que haga falta." data-en="With map, itinerary and locked price. We adjust it as many times as needed.">Con mapa, itinerario y precio cerrado. La ajustamos las veces que haga falta.</p></div><div class="tmx-step"><span class="tmx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15.5v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8.5l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5z"/></svg></span><span class="tmx-n mono">04</span><h3><span data-es="Apartas y viajas" data-en="Reserve and travel">Apartas y viajas</span></h3><p data-es="Con $3,000 MXN apartas. Nosotros nos encargamos del resto." data-en="MX$3,000 reserves it. We take care of the rest.">Con $3,000 MXN apartas. Nosotros nos encargamos del resto.</p></div></div>
+  <div class="tmx-cta"><a class="rp-btn rp-btn-primary" href="https://wa.me/447476685715?text=Hola%2C%20quiero%20dise%C3%B1ar%20mi%20viaje" target="_blank" rel="noopener"><span data-es="Escribir por WhatsApp" data-en="Message on WhatsApp">Escribir por WhatsApp</span></a>
+  <a class="rp-btn rp-btn-line" href="mailto:tuttocontact@proton.me">tuttocontact@proton.me</a></div>
+</div></section>
 
 <!-- ============ WHATSAPP FLOAT ============ -->
 <a href="https://wa.me/447476685715?text=Hola%2C%20quiero%20información%20sobre%20un%20viaje%20a%20través%20de%20Tutto%20il%20Mundo" class="whatsapp-float" aria-label="WhatsApp">
@@ -8854,6 +8954,7 @@ html[lang="en"] .logo-lockup::after { content: '← Home'; }
 <!-- ============ HERRAMIENTAS & TIPS ============ -->
 
 
+<section class="tm-outro tm-pg" id="tm-outro" data-pg-of="rutas designer temporadas experiencias nosotros precio contacto"></section>
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -14942,6 +15043,34 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
     if (bar && hero && current === 'ruta') bar.classList.toggle('show', hero.getBoundingClientRect().bottom < 40);
   }, { passive: true });
 
+  // ---- cierre de página: rutas destacadas + siguiente página ----
+  var OUTRO_PAGES = ['rutas', 'designer', 'temporadas', 'experiencias', 'precio', 'nosotros', 'contacto'];
+  var NEXT = {
+    rutas: ['designer', 'Diseña tu ruta', 'Design your route', 'Elige destinos, días y presupuesto. Te sugerimos rutas reales al momento.', 'Pick destinations, days and budget. We suggest real routes instantly.'],
+    designer: ['temporadas', 'Cuándo viajar', 'When to go', 'Clima, precios y multitudes mes a mes, y tu checklist antes de salir.', 'Weather, prices and crowds month by month, plus your departure checklist.'],
+    temporadas: ['experiencias', 'Experiencias', 'Experiences', 'Viajes a un solo país, niveles de viaje, experiencias únicas y Fighter Camps.', 'Single-country trips, travel levels, unique experiences and Fighter Camps.'],
+    experiencias: ['precio', 'Precio honesto', 'Honest pricing', 'Lo que ves es lo que pagas. Y cómo apartar tu lugar.', 'What you see is what you pay. And how to reserve your spot.'],
+    precio: ['nosotros', 'Nosotros', 'About us', 'Quiénes somos, cómo pensamos el viaje y el mundo visto desde adentro.', 'Who we are, how we think about travel and the world from within.'],
+    nosotros: ['contacto', 'Contacto', 'Contact', 'Cuéntanos tu idea y te respondemos en menos de 24 horas.', 'Tell us your idea and we reply within 24 hours.'],
+    contacto: ['rutas', 'Todas las rutas', 'All routes', 'Las 23 rutas, cada una con su mapa, itinerario y precio.', 'All 23 routes, each with its map, itinerary and price.']
+  };
+  var PICKS = {
+    rutas: ['europa-maxima', 'asia-perfecta', 'sa-perfecta'], designer: ['euroterranea-i', 'islandia-ruta', 'asia-completa'],
+    temporadas: ['noruega-ruta', 'islandia-ruta', 'sudeste-asiatico'], experiencias: ['mexico-profundo', 'medio-oriente-compacto', 'euroterranea-ii'],
+    precio: ['europa-budget', 'asia-justa', 'sudamerica-epica'], nosotros: ['europa-maxima', 'euroterranea-i', 'sa-perfecta'],
+    contacto: ['europa-maxima', 'islandia-ruta', 'asia-perfecta']
+  };
+  function fillOutro(page){
+    var box = document.getElementById('tm-outro'); if (!box) return;
+    var n = NEXT[page]; var cards = (PICKS[page] || []).map(cardOf).filter(Boolean);
+    if (cards.length < 3) cards = cards.concat([].slice.call(document.querySelectorAll('#rutas .route-card:not(.route-card-custom)'), 0, 3 - cards.length));
+    box.innerHTML = '<div class="tm-outro-in"><div class="rp-related-head"><div><div class="rp-label mono">' + tx('Inspírate', 'Get inspired') + '</div><h2 class="rp-h2">' + tx('Rutas que te pueden gustar', 'Routes you might like') + '</h2></div><a class="rp-link" href="#rutas">' + tx('Ver las 23', 'See all 23') + ICO.arrow + '</a></div><div class="rp-cards" id="tmOutroCards"></div>' +
+      '<a class="tm-next" href="#' + n[0] + '"><div><span class="mono">' + tx('SIGUIENTE PÁGINA', 'NEXT PAGE') + '</span><h3>' + tx(n[1], n[2]) + '</h3><p>' + tx(n[3], n[4]) + '</p></div><span class="tm-next-arrow">→</span></a></div>';
+    var cb = document.getElementById('tmOutroCards');
+    cards.slice(0, 3).forEach(function(c){ cb.appendChild(cloneCard(c)); });
+    setTimeout(function(){ drawIn(box); }, 80);
+  }
+
   // ---- navegación ----
   function resolve(hash){
     var h = (hash || '').replace(/^#/, '');
@@ -14970,7 +15099,8 @@ if (cpInpEl) cpInpEl.addEventListener('input', function() { this.style.height = 
       });
       window.dispatchEvent(new Event('resize'));
       setTimeout(function(){ window.dispatchEvent(new Event('resize')); }, 120);
-      if (r.page === 'rutas') setTimeout(function(){ var b = document.querySelector('#rutas .tmc-btn'); if (b && !b.hidden && b.getAttribute('aria-expanded') === 'false') b.click(); }, 160);
+      if (r.page !== 'inicio') setTimeout(function(){ document.querySelectorAll('.tm-pg[data-pg-of~="' + r.page + '"] .tmc-btn').forEach(function(b){ if (!b.hidden && b.getAttribute('aria-expanded') === 'false') b.click(); }); }, 160);
+      if (OUTRO_PAGES.indexOf(r.page) > -1) fillOutro(r.page);
       if (r.page === 'ruta') {
         var v = document.getElementById('ruta');
         setTimeout(function(){ drawIn(v); }, 60);
